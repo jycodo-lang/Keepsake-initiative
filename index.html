@@ -282,6 +282,39 @@
          .team-roleline{ margin-top: 4px; font-size: 13px; color: var(--muted2); font-weight: 800; }
          .team-desc{ margin-top: 10px; }
          /* =============================================== */
+
+         /* ====== REVIEWS (ADDED) ====== */
+         .stars{
+           display:flex;
+           gap:6px;
+           align-items:center;
+           user-select:none;
+         }
+         .star-btn{
+           width:40px;
+           height:40px;
+           border-radius: 12px;
+           border:1px solid var(--stroke);
+           background: rgba(255,255,255,0.92);
+           cursor:pointer;
+           display:grid;
+           place-items:center;
+           font-size: 20px;
+           box-shadow: var(--shadow2);
+           line-height:1;
+         }
+         .star-btn:hover{ transform: translateY(-1px); }
+         .star-btn:active{ transform: translateY(0px); }
+         .star-btn.on{
+           border-color: rgba(99,102,241,0.22);
+           background: rgba(99,102,241,0.10);
+         }
+         .star-help{
+           color: var(--muted2);
+           font-size: 13px;
+           margin-top: 6px;
+         }
+         /* ============================ */
       </style>
    </head>
 
@@ -300,6 +333,10 @@
                <a href="#home" data-go="home">Home</a>
                <a href="#keepsakes" data-go="keepsakes">Keepsakes</a>
                <a href="#testimonials" data-go="testimonials">Testimonials</a>
+
+               <!-- REVIEWS TAB (ADDED) -->
+               <a href="#reviews" data-go="reviews">Reviews</a>
+
                <a href="#articles" data-go="articles">Articles</a>
                <a href="#resources" data-go="resources">Resources</a>
                <a href="#chapter" data-go="chapter">Start a Chapter</a>
@@ -490,6 +527,73 @@ And sometimes it looks out the window and says,
                   <p class="small">This page will include personal experiences shared with consent.</p>
                </div>
             </div>
+         </section>
+
+         <!-- REVIEWS (ADDED) -->
+         <section class="page" id="page-reviews" aria-labelledby="reviews-title">
+           <div class="card pad">
+             <h1 id="reviews-title">Reviews</h1>
+             <p class="lead">Leave a comment and a 1–5 star rating. Your review only submits when you click <strong>Submit</strong>.</p>
+
+             <div class="two">
+               <div class="info">
+                 <h2>Write a review</h2>
+
+                 <form id="review-form">
+                   <input type="hidden" name="form_type" value="Review" />
+
+                   <div class="row">
+                     <div>
+                       <label>Your name</label>
+                       <input name="name" required />
+                     </div>
+                     <div>
+                       <label>Your email</label>
+                       <input name="email" placeholder="you@email.com" required />
+                     </div>
+                   </div>
+
+                   <div>
+                     <label>Rating</label>
+                     <div class="stars" role="radiogroup" aria-label="Rating from 1 to 5 stars">
+                       <button class="star-btn" type="button" data-star="1" aria-label="1 star">★</button>
+                       <button class="star-btn" type="button" data-star="2" aria-label="2 stars">★</button>
+                       <button class="star-btn" type="button" data-star="3" aria-label="3 stars">★</button>
+                       <button class="star-btn" type="button" data-star="4" aria-label="4 stars">★</button>
+                       <button class="star-btn" type="button" data-star="5" aria-label="5 stars">★</button>
+                     </div>
+                     <div class="star-help" id="rating-help">Select 1–5 stars.</div>
+
+                     <input type="hidden" name="rating" id="review-rating" value="" required />
+                   </div>
+
+                   <div>
+                     <label>Comment</label>
+                     <textarea name="comment" placeholder="Write your review..." required></textarea>
+                   </div>
+
+                   <button class="btn primary" type="submit">Submit</button>
+                   <div id="review-result" class="small"></div>
+                 </form>
+               </div>
+
+               <div class="info">
+                 <h2>What happens next</h2>
+                 <ul class="clean">
+                   <li>Your review is saved locally in your browser (demo mode).</li>
+                   <li>You can later connect this to EmailJS / a backend to store it for real.</li>
+                 </ul>
+               </div>
+             </div>
+
+             <hr class="sep" />
+
+             <div class="info">
+               <h2>Recent reviews (local demo)</h2>
+               <div class="list" id="reviews-list"></div>
+               <p class="small" id="reviews-empty" style="margin-top:10px;">No reviews yet.</p>
+             </div>
+           </div>
          </section>
 
          <!-- ARTICLES -->
@@ -840,8 +944,8 @@ And sometimes it looks out the window and says,
 
                         <!-- Efe Ozgurel (COMING SOON: no photo/description) -->
                   <div class="team-card">
-                       <img class="team-photo" src="efe.jpg" alt="Efe Ozgruel">
-                     <div class="team-name">Efe Ozgruel</div>
+                       <img class="team-photo" src="efe.jpg" alt="Efe Ozgurel">
+                     <div class="team-name">Efe Ozgurel</div>
                      <div class="team-roleline">Co-Director of Educational Outreach</div>
                      <p class="small team-desc">
                        I want to pursue sports medicine in my future or just be involved in sports in some way. I also want to help children who are less fortunate than others.
@@ -1023,7 +1127,7 @@ And sometimes it looks out the window and says,
              showToast._t = setTimeout(() => toast.style.display = "none", 2200);
            };
 
-           const pages = ["home","keepsakes","testimonials","articles","resources","chapter","team","donate","about"];
+           const pages = ["home","keepsakes","testimonials","articles","resources","chapter","team","donate","about","reviews"];
 
            function setActivePage(id, push=true){
              pages.forEach(p => $("#page-"+p).classList.toggle("active", p===id));
@@ -1196,15 +1300,104 @@ And sometimes it looks out the window and says,
            $("#this-week").addEventListener("click", () => { manualOffset = 0; renderArticles(); });
 
            renderArticles();
+
+           /* =========================
+              REVIEWS (ADDED)
+           ========================== */
+           const reviewForm = $("#review-form");
+           const reviewRating = $("#review-rating");
+           const ratingHelp = $("#rating-help");
+           const starBtns = $$("#page-reviews .star-btn");
+           const reviewsList = $("#reviews-list");
+           const reviewsEmpty = $("#reviews-empty");
+
+           function setStars(n){
+             starBtns.forEach(b => {
+               const v = Number(b.dataset.star);
+               const on = v <= n;
+               b.classList.toggle("on", on);
+               b.setAttribute("aria-pressed", on ? "true" : "false");
+             });
+             if(reviewRating) reviewRating.value = n ? String(n) : "";
+             if(ratingHelp) ratingHelp.textContent = n ? `Selected: ${n} star${n===1?"":"s"}.` : "Select 1–5 stars.";
+           }
+
+           function loadReviews(){
+             try{ return JSON.parse(localStorage.getItem("tki_reviews_v1") || "[]"); }
+             catch{ return []; }
+           }
+
+           function saveReviews(arr){
+             localStorage.setItem("tki_reviews_v1", JSON.stringify(arr));
+           }
+
+           function renderReviews(){
+             const all = loadReviews();
+             if(!reviewsList || !reviewsEmpty) return;
+
+             reviewsList.innerHTML = "";
+             reviewsEmpty.style.display = all.length ? "none" : "block";
+
+             all.slice().reverse().forEach(r => {
+               const card = document.createElement("div");
+               card.className = "article-card";
+               const stars = "★".repeat(r.rating) + "☆".repeat(5 - r.rating);
+               card.innerHTML = `
+                 <div class="pill">${escapeHtml(stars)}</div>
+                 <h3 style="margin-top:10px;">${escapeHtml(r.name)}</h3>
+                 <div class="article-meta">${escapeHtml(r.email)} • ${new Date(r.createdAt).toLocaleString()}</div>
+                 <p class="small">${escapeHtml(r.comment)}</p>
+               `;
+               reviewsList.appendChild(card);
+             });
+           }
+
+           starBtns.forEach(btn => btn.addEventListener("click", () => setStars(Number(btn.dataset.star))));
+
+           if(reviewForm){
+             reviewForm.addEventListener("submit", (e) => {
+               e.preventDefault();
+
+               const fd = new FormData(reviewForm);
+               const name = (fd.get("name") || "").toString().trim();
+               const email = (fd.get("email") || "").toString().trim();
+               const comment = (fd.get("comment") || "").toString().trim();
+               const rating = Number((fd.get("rating") || "").toString().trim());
+
+               const result = $("#review-result");
+
+               if(!name || !email || !comment){
+                 if(result) result.textContent = "Please fill in all fields.";
+                 showToast("Missing fields.");
+                 return;
+               }
+               if(!/^\S+@\S+\.\S+$/.test(email)){
+                 if(result) result.textContent = "Please enter a valid email address.";
+                 showToast("Invalid email.");
+                 return;
+               }
+               if(!(rating >= 1 && rating <= 5)){
+                 if(result) result.textContent = "Please select a star rating (1–5).";
+                 showToast("Select stars.");
+                 return;
+               }
+
+               const all = loadReviews();
+               all.push({ name, email, comment, rating, createdAt: Date.now() });
+               saveReviews(all);
+
+               if(result) result.textContent = "Submitted. Thank you!";
+               showToast("Review submitted.");
+               reviewForm.reset();
+               setStars(0);
+               renderReviews();
+             });
+           }
+
+           setStars(0);
+           renderReviews();
+           /* ========================= */
          })();
       </script>
    </body>
 </html>
-
-
-
-
-
-
-
-
