@@ -281,7 +281,7 @@
          .team-name{ font-weight: 900; }
          .team-roleline{ margin-top: 4px; font-size: 13px; color: var(--muted2); font-weight: 800; }
          .team-desc{ margin-top: 10px; }
-        
+
          .stars{
            display:flex;
            gap:6px;
@@ -312,7 +312,6 @@
            font-size: 13px;
            margin-top: 6px;
          }
-         /* ============================ */
       </style>
    </head>
 
@@ -331,9 +330,7 @@
                <a href="#home" data-go="home">Home</a>
                <a href="#keepsakes" data-go="keepsakes">Keepsakes</a>
                <a href="#testimonials" data-go="testimonials">Testimonials</a>
-
                <a href="#reviews" data-go="reviews">Reviews</a>
-
                <a href="#articles" data-go="articles">Articles</a>
                <a href="#resources" data-go="resources">Resources</a>
                <a href="#chapter" data-go="chapter">Start a Chapter</a>
@@ -400,6 +397,39 @@
                            <li>We do not replace clinical child life services.</li>
                            <li>We partner with hospitals and child life departments to create uplifting experiences.</li>
                         </ul>
+                     </div>
+
+                     <div class="info" style="margin-top:14px;">
+                        <h2>Founder’s Statement</h2>
+                        <p>When I was 7, I fell unconscious on a trip to the hospital for what we thought was simply a really bad flu, and woke up days later with a tube in my throat and beeping machines surrounding me. I was told I’d had pneumonia in both lungs, and it had progressed unchecked, due to a misdiagnosis, leading to multi-organ failure.</p>
+
+                        <p>I was in the ICU for weeks, in the hospital for months, and it was a harrowing experience for not only me, but my family. It still feels surreal whenever I think about it, that I was this close to dying, but am now alive, happy, and grateful.</p>
+
+                        <p>Years later, my memories of the hospital, which fuel my ambition and desire to be a pediatrician, seem…incomplete. Because, in truth, my memories are limited to IVs, blood transfusions, multiple surgeries, and the pain of my parents, who had to silently watch their child go through this.</p>
+
+                        <p><strong>But I don’t remember my strength.</strong></p>
+                        <p><strong>I don’t remember my bravery.</strong></p>
+
+                        <p>I know people visited. My parents’ friends. My second-grade teacher. But I was often asleep. And even when I was awake, I felt alone. Unheard. Over time, my story became something reduced — a dramatic anecdote for a college essay, or a traumatic tale told to new friends. My resilience was something that felt too painful to acknowledge.</p>
+
+                        <p>But that shouldn't be true. I was a child who went through an experience that could have broken me, yet I came out stronger. I'm resilient, not a miracle to be whispered about. Not a tragedy to be simplified. I am proof of my strength.</p>
+
+                        <p>And so is every child living through a chronic or life-threatening illness.</p>
+
+                        <p>Their stories deserve to be remembered not only for the pain but for the courage that they display, each and every day in the hospital. For the story that they have to share, because it is a beautiful, inspiring keepsake that deserves to be shared, long after their pain subsides, long after a new chapter starts in their lives.</p>
+
+                        <p><strong>That’s why I created The Keepsake Initiative.</strong></p>
+
+                        <p>We make personal short stories, poems, and songs, custom-made for every child, in order to celebrate their resilience and bravery. Every family deserves to remember their struggle with something positive, and we aim to give them this gift. The gift of a keepsake, that shifts their narrative from pain to resilience.</p>
+
+                        <p>Beyond keepsakes, our team brings crafts, books, toys, music, and art into hospital rooms. We aim to give children something simple yet powerful: a moment of joy. A moment that feels golden, even under the steady, bright, fluorescent lights, surrounded by beeping machines.</p>
+
+                        <p><strong>We cannot cure illness.</strong></p>
+                        <p><strong>But we can ease loneliness.</strong></p>
+                        <p><strong>We can honor bravery.</strong></p>
+                        <p><strong>We can create something that lasts.</strong></p>
+
+                        <p><strong>And sometimes, that is enough.</strong></p>
                      </div>
                   </div>
 
@@ -574,11 +604,11 @@ And sometimes it looks out the window and says,
                  </form>
                </div>
 
-
-             <div class="info">
-               <h2>Recent reviews</h2>
-               <div class="list" id="reviews-list"></div>
-               <p class="small" id="reviews-empty" style="margin-top:10px;">No reviews yet.</p>
+               <div class="info">
+                 <h2>Recent reviews</h2>
+                 <div class="list" id="reviews-list"></div>
+                 <p class="small" id="reviews-empty" style="margin-top:10px;">No reviews yet.</p>
+               </div>
              </div>
            </div>
          </section>
@@ -586,22 +616,35 @@ And sometimes it looks out the window and says,
          <!-- ARTICLES -->
          <section class="page" id="page-articles" aria-labelledby="articles-title">
             <div class="card pad">
-               <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap;">
-                  <div>
-                     <h1 id="articles-title">Articles</h1>
-                     <p class="lead">This section rotates weekly. Each week, a different set of educational articles is shown.</p>
-                     <p class="small" id="week-label"></p>
-                  </div>
-                  <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                     <button class="btn" type="button" id="prev-week">Previous</button>
-                     <button class="btn primary" type="button" id="this-week">This Week</button>
-                     <button class="btn" type="button" id="next-week">Next</button>
-                  </div>
-               </div>
+               <h1 id="articles-title">Articles</h1>
+               <p class="lead">Original educational articles written by our team.</p>
 
-               <div class="list" id="articles-list" style="margin-top:12px;"></div>
+               <div class="list" style="margin-top:12px;">
+                  <div class="article-card">
+                     <div class="pill">Childhood Cancer Education</div>
+                     <h3 style="margin-top:10px;">Understanding The Implications of Leukemia in Children</h3>
+                     <div class="article-meta">By Ruhani N.</div>
 
-               <hr class="sep" />
+                     <p>
+                        Leukemia is one of the most prevalent of the main childhood cancers, the most common out of all the main types - brain, spinal cord, lymphatic, blood, and solid tumors. It originates in the blood and bone marrow, however it affects the entirety of the child, often weakening their immune system either through it’s own effect, or through the rigorous chemotherapy or radiation therapy involved in order to heal the patient.
+                     </p>
+
+                     <p>
+                        White blood cells in the children’s bodies start acting…dysfunctional. They don’t work the way they’re supposed to, instead dividing uncontrollably, until it’s a problem. This all starts in the bone marrow - inside the bone marrow, the three main types of blood cells (red, white, and platelets) are made. A single, immature, white blood cell develops a genetic mutation that causes it to stay immature in what is called a “blast” state, and then moves on to multiply uncontrollably, as the switch that tells it to stop replicating is turned off. In some cases, the “die” switch that triggers cell death (apoptosis) is flipped off as well. This leads to the bone marrow to become overcrowded with abnormal white blood cells, leaving little room for the healthy blood-forming cells left. This leads to anemia - a reduction in the count of red blood cells - which causes a shortness of breath, fatigue, paling of skin, and weakness. This also lowers the child’s platelet counts, leading to easy bruising, more frequent nosebleeds, gum-bleeding, and the formation of small spots called ‘petechiae’ on the skin. And, even though the white blood cell count is technically higher, the cells are abnormal and dysfunctional, and end up disrupting immune health, often making children more prone to contracting infectious disease. These abnormal cells can travel throughout the body, settling on common targets like the liver, spleen, and even some brain and spinal fluid. In acute leukemia, these symptoms manifest quickly and often require urgent treatment, however, in chronic leukemia, these symptoms may manifest gradually and go unnoticed.
+                     </p>
+
+                     <p>
+                        It might be easy to blame oneself, chalk it up to “We should have made them eat their greens”. However, it’s not so simple. Cancer in general, especially childhood leukemia, has no clear cause. It may be genetic mutations caused by hereditary condition, or it may be exposure to radiation or harmful chemicals. But we do not yet fully understand its causes, as of yet.
+                     </p>
+
+                     <p>
+                        However, the survival rates for Leukemia, especially in children, has increased over the years, with new targeted therapies added to the growing list of chemotherapy and radiation therapy options, for children. There is much ambiguity, but also much hope, and in the U.S., the overall five-year relative survival rate for childhood leukemia is now over 90 % thanks to modern treatments — a dramatic improvement from decades ago.
+                     </p>
+
+                     <p>
+                        Leukemia is a complex and, often, overwhelming diagnosis. However, it’s important to understand that behind treatment plans and medical reports, is a child who has favorite songs, big ideas and dreams, and a heart of gold, that simply wants to survive, and have fun. It’s important that one remembers that they are far more than this diagnosis. Medicine works to heal the body, however creativity, emotional support, healing, and connection, work to heal the spirit. Understanding leukemia doesn’t just mean understanding the science and technology behind it, but also means understanding the humanity, as well.
+                     </p>
+                  </div>
                </div>
             </div>
          </section>
@@ -680,6 +723,25 @@ And sometimes it looks out the window and says,
                         </p>
                      </details>
                   </div>
+               </div>
+
+               <hr class="sep" />
+
+               <div class="info">
+                  <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+                     <div>
+                        <h2 style="margin-bottom:6px;">Educational Resources Library</h2>
+                        <p class="small">This section rotates weekly. Each week, a different set of educational resources is shown.</p>
+                        <p class="small" id="resources-week-label"></p>
+                     </div>
+                     <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <button class="btn" type="button" id="resources-prev-week">Previous</button>
+                        <button class="btn primary" type="button" id="resources-this-week">This Week</button>
+                        <button class="btn" type="button" id="resources-next-week">Next</button>
+                     </div>
+                  </div>
+
+                  <div class="list" id="resources-articles-list" style="margin-top:12px;"></div>
                </div>
 
                <hr class="sep" />
@@ -860,44 +922,16 @@ And sometimes it looks out the window and says,
                <p class="lead">Board of Directors</p>
 
                <div class="team-grid">
-                  <!-- Amogh Velivela -->
                   <div class="team-card">
                      <img class="team-photo" src="Amogh.png" alt="Amogh Velivela">
                      <div class="team-name">Amogh Velivela</div>
-                     <div class="team-roleline">Director of Administration and Co-Executive Director</div>
+                     <div class="team-roleline">Co-Executive Director and Co-Founder</div>
                      <p class="small team-desc">
                         Amogh is a Sophomore at Huron High School. Focused on biomedical engineering and rowing. Joined to help families experiencing hardship and to expand impact through organization and outreach.
                      </p>
                   </div>
-  <!-- Kanishka Gupta -->
-                  <div class="team-card">
-                     <img class="team-photo" src="gupta.jpg" alt="Kanishka Gupta">
-                     <div class="team-name">Kanishka Gupta</div>
-                     <div class="team-roleline">Co-Director of Song Making</div>
-                     <p class="small team-desc">
-                        Kanishka Gupta is a sophomore at Huron High School in Ann Arbor and is passionate about using his abilities to make a real difference in our community. In his free time, he enjoys playing tennis, reading books, and hanging out with friends and family.
-                     </p>
-                  </div>
-     <!-- Sadhvee Sridar -->
-                  <div class="team-card">
-                     <img class="team-photo" src="IMG_5097.png" alt="Sadhvee Sridar">
-                     <div class="team-name">Sadhvee Sridar</div>
-                     <div class="team-roleline">Director of Operations</div>
-                     <p class="small team-desc">
-                        Hi! I'm Sadhvee, a high school student who enjoys biology, Ice skating, and anything pink. I love meeting new people and challenging myself. This organization is a perfect way to make someone's day a little better. I'm grateful to be a part of this amazing community that chooses to make a difference everyday.
-                     </p>
-                  </div>
-<div class="team-card">
-                     <img class="team-photo" src="janet.jpg" alt="Janet Yang">
-                     <div class="team-name">Janet Yang</div>
-                     <div class="team-roleline">Director of Legislation</div>
-                     <p class="small team-desc">
-                        I am currently 15 years old at Huron High School. I love skating and hope to pursue biomedical engineering and minor in business. I joined this nonprofit because I wanted to make a difference in people's lives and help make a difference in the world, even if its a small one. 
-                     </p>
-                  </div>
-                  
-     <!-- Ruhani Nagrath -->
-                  <div class="team-card">
+
+                    <div class="team-card">
                      <img class="team-photo" src="ruhani.png" alt="Ruhani Nagrath">
                      <div class="team-name">Ruhani Nagrath</div>
                      <div class="team-roleline">Executive Director and Founder</div>
@@ -906,20 +940,28 @@ And sometimes it looks out the window and says,
                      </p>
                   </div>
 
-             
 
-                  <!-- Maxime Song -->
                   <div class="team-card">
-                     <img class="team-photo" src="Maxime.jpeg" alt="Maxime Song">
-                     <div class="team-name">Maxime Song</div>
-                     <div class="team-roleline">Director of Composition</div>
+                     <img class="team-photo" src="IMG_5097.png" alt="Sadhvee Sridar">
+                     <div class="team-name">Sadhvee Sridar</div>
+                     <div class="team-roleline">Director of Operations</div>
                      <p class="small team-desc">
-                        Maxime Song is a sophomore at Huron High School. She uses music to provide her support to the organization, and to encourage the children to keep going.
+                        Hi! I'm Sadhvee, a high school student who enjoys biology, Ice skating, and anything pink. I love meeting new people and challenging myself. This organization is a perfect way to make someone's day a little better. I'm grateful to be a part of this amazing community that chooses to make a difference everyday.
                      </p>
                   </div>
 
-                
-                  <!-- Kiya Rostamian -->
+
+                  
+
+                  <div class="team-card">
+                     <img class="team-photo" src="gupta.jpg" alt="Kanishka Gupta">
+                     <div class="team-name">Kanishka Gupta</div>
+                     <div class="team-roleline">Co-Director of Song Making</div>
+                     <p class="small team-desc">
+                        Kanishka Gupta is a sophomore at Huron High School in Ann Arbor and is passionate about using his abilities to make a real difference in our community. In his free time, he enjoys playing tennis, reading books, and hanging out with friends and family.
+                     </p>
+                  </div>
+
                   <div class="team-card">
                      <img class="team-photo" src="kiya.jpeg" alt="Kiya Rostamian">
                      <div class="team-name">Kiya Rostamian</div>
@@ -929,65 +971,66 @@ And sometimes it looks out the window and says,
                      </p>
                   </div>
 
-                    <div class="team-card">
-                     <img class="team-photo" src="ammar.jpg" alt="Ammar Ali">
-                    <div class="team-name">Ammar Ali</div>
-                      <div class="team-roleline">Co-Director of Funding</div>
-                        <p class="small team-desc">
-                  Ammar Ali is a Sophomore at Huron High School, Class of 28 who enjoys playing sports in his free time. He hopes to bring joy to children going through difficult times.
+                  <div class="team-card">
+                     <img class="team-photo" src="janet.jpg" alt="Janet Yang">
+                     <div class="team-name">Janet Yang</div>
+                     <div class="team-roleline">Director of Legislation</div>
+                     <p class="small team-desc">
+                        I am currently 15 years old at Huron High School. I love skating and hope to pursue biomedical engineering and minor in business. I joined this nonprofit because I wanted to make a difference in people's lives and help make a difference in the world, even if its a small one.
                      </p>
-                    </div>
+                  </div>
                   
-
-                     <div class="team-card">
-                       <img class="team-photo" src="ryan.jpg" alt="Ryan John">
+ <div class="team-card">
+                     <img class="team-photo" src="ryan.jpg" alt="Ryan John">
                      <div class="team-name">Ryan John</div>
                      <div class="team-roleline">Director of Engineering Creations</div>
                      <p class="small team-desc">
-                       Ryan John is a sophmore at Huron High school pursuing Engineering, he is fascinated in building and coding and enjoys playing sports like Rowing. Ryan joined the organization to help make peoples day better by creating small creations as <strong>Keepsakes</strong>.
+                        Ryan John is a sophmore at Huron High school pursuing Engineering, he is fascinated in building and coding and enjoys playing sports like Rowing. Ryan joined the organization to help make peoples day better by creating small creations as <strong>Keepsakes</strong>.
                      </p>
-                     </div>
-                  
-                        <!-- Efe Ozgurel (COMING SOON: no photo/description) -->
+                  </div>
+                
+
                   <div class="team-card">
-                       <img class="team-photo" src="efe.jpg" alt="Efe Ozgurel">
+                     <img class="team-photo" src="Maxime.jpeg" alt="Maxime Song">
+                     <div class="team-name">Maxime Song</div>
+                     <div class="team-roleline">Director of Composition</div>
+                     <p class="small team-desc">
+                        Maxime Song is a sophomore at Huron High School. She uses music to provide her support to the organization, and to encourage the children to keep going.
+                     </p>
+                  </div>
+
+
+                  <div class="team-card">
+                     <img class="team-photo" src="ammar.jpg" alt="Ammar Ali">
+                     <div class="team-name">Ammar Ali</div>
+                     <div class="team-roleline">Co-Director of Funding</div>
+                     <p class="small team-desc">
+                        Ammar Ali is a Sophomore at Huron High School, Class of 28 who enjoys playing sports in his free time. He hopes to bring joy to children going through difficult times.
+                     </p>
+                  </div>
+
+                 
+
+                  <div class="team-card">
+                     <img class="team-photo" src="efe.jpg" alt="Efe Ozgurel">
                      <div class="team-name">Efe Ozgurel</div>
                      <div class="team-roleline">Co-Director of Educational Outreach</div>
                      <p class="small team-desc">
                        I want to pursue sports medicine in my future or just be involved in sports in some way. I also want to help children who are less fortunate than others.
                      </p>
                   </div>
-               
-            
-              <div class="team-card">
+
+                  <div class="team-card">
                      <img class="team-photo" src="amelia.jpg" alt="Amelia Tomas">
                      <div class="team-name">Amelia Tomas</div>
                      <div class="team-roleline">Director of Advertising & Outreach</div>
-                          <p class="small team-desc">
-                  I am 16 years old and a sophmore at Huron High school. I am a second generation immigrant from Easten Europe and the Balkans, and am interested in psychology. I wanted to join this organization because I want to help spread and bring joy to those undergoing a hard time.
-                     </p>
-                  </div>
-             
-                     
-
-             
-                    
-
-            <div class="team-card">
-                        <img class="team-photo" src="alex.jpg" alt="Alex Gugino">
-                    <div class="team-name">Alex Gugino</div>
-                     <div class="team-roleline">Co-Director of Funding</div>
-         <p class="small team-desc">
-                 Hi, I'm Alex. I'm a junior at Huron, and I work on fundraising for The Keepsake Initiative. I'm also in NHS and DECA. Outside of school-related activities, I enjoy listening to music and going to the gym. I plan to go to college and major in Economics.
+                     <p class="small team-desc">
+                        I am 16 years old and a sophmore at Huron High school. I am a second generation immigrant from Easten Europe and the Balkans, and am interested in psychology. I wanted to join this organization because I want to help spread and bring joy to those undergoing a hard time.
                      </p>
                   </div>
                </div>
             </div>
-            
-
-           
          </section>
-             
 
          <!-- DONATE -->
          <section class="page" id="page-donate" aria-labelledby="donate-title">
@@ -1083,11 +1126,12 @@ And sometimes it looks out the window and says,
 
       <footer class="footer">
          <div class="container">© <span id="year"></span> The Keepsake Initiative</div>
-          <div class="container"><strong>Website Provided by Amogh Velivela</strong></div>
+         <div class="container"><strong>Website Provided by Amogh Velivela</strong></div>
       </footer>
 
       <div class="toast" role="status" aria-live="polite"></div>
 
+      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
       <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
       <script>
          (() => {
@@ -1095,11 +1139,17 @@ And sometimes it looks out the window and says,
              STRIPE_DONATE_ONCE_URL: "",
              EMAILJS_PUBLIC_KEY: "EVAYDFkS9G7fhKqb8",
              EMAILJS_SERVICE_ID: "service_88j58pt",
-             EMAILJS_TEMPLATE_ID: "template_xbj102a"
+             EMAILJS_TEMPLATE_ID: "template_xbj102a",
+             SUPABASE_URL: "YOUR_SUPABASE_URL",
+             SUPABASE_ANON_KEY: "YOUR_SUPABASE_ANON_KEY"
            };
 
            const $ = (s, r=document) => r.querySelector(s);
            const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+
+           const supabase = (window.supabase && CONFIG.SUPABASE_URL && CONFIG.SUPABASE_ANON_KEY && CONFIG.SUPABASE_URL !== "YOUR_SUPABASE_URL" && CONFIG.SUPABASE_ANON_KEY !== "YOUR_SUPABASE_ANON_KEY")
+             ? window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY)
+             : null;
 
            const toast = $(".toast");
            const showToast = (msg) => {
@@ -1139,7 +1189,6 @@ And sometimes it looks out the window and says,
            const initial = (location.hash || "#home").slice(1);
            setActivePage(pages.includes(initial) ? initial : "home", false);
 
-           // Stripe donate link wiring
            const donateOnce = $("#donate-once");
            const donateStatus = $("#donate-status");
 
@@ -1157,7 +1206,6 @@ And sometimes it looks out the window and says,
              donateStatus.textContent = "Donation link not live yet.";
            }
 
-           // EmailJS
            const emailJsReady = () => CONFIG.EMAILJS_PUBLIC_KEY && CONFIG.EMAILJS_SERVICE_ID && CONFIG.EMAILJS_TEMPLATE_ID;
 
            if(window.emailjs && emailJsReady()){
@@ -1209,7 +1257,6 @@ And sometimes it looks out the window and says,
 
            $("#year").textContent = new Date().getFullYear();
 
-           // Weekly rotating articles
            const ARTICLE_POOL = [
              {topic:"Hospital coping", title:"At the Hospital: Helping My Child Cope (PDF)", org:"NCTSN", kind:"Guide", url:"https://www.nctsn.org/sites/default/files/resources/at_the_hospital_helping_my_child_cope_parents.pdf", why:"Practical coping guidance for parents during pediatric hospitalization."},
              {topic:"Siblings", title:"Support Siblings of a Hospitalized Child", org:"CHOP", kind:"Resource", url:"https://www.chop.edu/health-resources/support-siblings-hospitalized-child", why:"How siblings may react and how caregivers can support them."},
@@ -1253,14 +1300,14 @@ And sometimes it looks out the window and says,
              }[m]));
            }
 
-           function renderArticles(){
+           function renderResourceArticles(){
              const idx = currentSetIndex();
              const start = idx * SET_SIZE;
              const slice = ARTICLE_POOL.slice(start, start + SET_SIZE);
 
-             $("#week-label").textContent = `Showing weekly set ${idx+1} of ${totalSets}`;
+             $("#resources-week-label").textContent = `Showing weekly set ${idx+1} of ${totalSets}`;
 
-             const list = $("#articles-list");
+             const list = $("#resources-articles-list");
              list.innerHTML = "";
 
              slice.forEach(a => {
@@ -1277,15 +1324,12 @@ And sometimes it looks out the window and says,
              });
            }
 
-           $("#prev-week").addEventListener("click", () => { manualOffset -= 1; renderArticles(); });
-           $("#next-week").addEventListener("click", () => { manualOffset += 1; renderArticles(); });
-           $("#this-week").addEventListener("click", () => { manualOffset = 0; renderArticles(); });
+           $("#resources-prev-week").addEventListener("click", () => { manualOffset -= 1; renderResourceArticles(); });
+           $("#resources-next-week").addEventListener("click", () => { manualOffset += 1; renderResourceArticles(); });
+           $("#resources-this-week").addEventListener("click", () => { manualOffset = 0; renderResourceArticles(); });
 
-           renderArticles();
+           renderResourceArticles();
 
-           /* =========================
-              REVIEWS (ADDED)
-           ========================== */
            const reviewForm = $("#review-form");
            const reviewRating = $("#review-rating");
            const ratingHelp = $("#rating-help");
@@ -1304,31 +1348,37 @@ And sometimes it looks out the window and says,
              if(ratingHelp) ratingHelp.textContent = n ? `Selected: ${n} star${n===1?"":"s"}.` : "Select 1–5 stars.";
            }
 
-           function loadReviews(){
-             try{ return JSON.parse(localStorage.getItem("tki_reviews_v1") || "[]"); }
-             catch{ return []; }
+           async function loadReviews(){
+             if(!supabase) return [];
+             const { data, error } = await supabase
+               .from("reviews")
+               .select("*")
+               .order("created_at", { ascending: false });
+
+             if(error){
+               console.error(error);
+               return [];
+             }
+
+             return data || [];
            }
 
-           function saveReviews(arr){
-             localStorage.setItem("tki_reviews_v1", JSON.stringify(arr));
-           }
-
-           function renderReviews(){
-             const all = loadReviews();
+           async function renderReviews(){
+             const all = await loadReviews();
              if(!reviewsList || !reviewsEmpty) return;
 
              reviewsList.innerHTML = "";
              reviewsEmpty.style.display = all.length ? "none" : "block";
 
-             all.slice().reverse().forEach(r => {
+             all.forEach(r => {
                const card = document.createElement("div");
                card.className = "article-card";
-               const stars = "★".repeat(r.rating) + "☆".repeat(5 - r.rating);
+               const stars = "★".repeat(Number(r.rating || 0)) + "☆".repeat(5 - Number(r.rating || 0));
                card.innerHTML = `
                  <div class="pill">${escapeHtml(stars)}</div>
-                 <h3 style="margin-top:10px;">${escapeHtml(r.name)}</h3>
-                 <div class="article-meta">${escapeHtml(r.email)} • ${new Date(r.createdAt).toLocaleString()}</div>
-                 <p class="small">${escapeHtml(r.comment)}</p>
+                 <h3 style="margin-top:10px;">${escapeHtml(r.name || "")}</h3>
+                 <div class="article-meta">${escapeHtml(r.email || "")} • ${new Date(r.created_at).toLocaleString()}</div>
+                 <p class="small">${escapeHtml(r.comment || "")}</p>
                `;
                reviewsList.appendChild(card);
              });
@@ -1337,7 +1387,7 @@ And sometimes it looks out the window and says,
            starBtns.forEach(btn => btn.addEventListener("click", () => setStars(Number(btn.dataset.star))));
 
            if(reviewForm){
-             reviewForm.addEventListener("submit", (e) => {
+             reviewForm.addEventListener("submit", async (e) => {
                e.preventDefault();
 
                const fd = new FormData(reviewForm);
@@ -1358,46 +1408,74 @@ And sometimes it looks out the window and says,
                  showToast("Invalid email.");
                  return;
                }
-               if(!(rating >= 1 && rating <= 5)){
-                 if(result) result.textContent = "Please select a star rating (1–5).";
-                 showToast("Select stars.");
+               if(!rating || rating < 1 || rating > 5){
+                 if(result) result.textContent = "Please select a star rating.";
+                 showToast("Select a rating.");
+                 return;
+               }
+               if(!supabase){
+                 if(result) result.textContent = "Reviews are not live yet. Add SUPABASE_URL and SUPABASE_ANON_KEY in CONFIG, then create the reviews table in Supabase.";
+                 showToast("Add Supabase config.");
                  return;
                }
 
-               const all = loadReviews();
-               all.push({ name, email, comment, rating, createdAt: Date.now() });
-               saveReviews(all);
+               try{
+                 if(result) result.textContent = "Submitting…";
 
-               if(result) result.textContent = "Submitted. Thank you!";
-               showToast("Review submitted.");
-               reviewForm.reset();
-               setStars(0);
-               renderReviews();
+                 const { error } = await supabase.from("reviews").insert([{
+                   name,
+                   email,
+                   comment,
+                   rating
+                 }]);
+
+                 if(error) throw error;
+
+                 if(result) result.textContent = "Review submitted.";
+                 showToast("Review submitted.");
+                 reviewForm.reset();
+                 setStars(0);
+                 await renderReviews();
+               }catch(err){
+                 console.error(err);
+                 if(result) result.textContent = "Could not submit review. Make sure the Supabase table exists and permissions are enabled.";
+                 showToast("Review failed.");
+               }
              });
            }
 
            setStars(0);
            renderReviews();
-           /* ========================= */
          })();
       </script>
+
+      <!--
+      SUPABASE SETUP (run once in Supabase SQL Editor)
+
+      create extension if not exists pgcrypto;
+
+      create table if not exists public.reviews (
+        id uuid primary key default gen_random_uuid(),
+        name text not null,
+        email text not null,
+        comment text not null,
+        rating integer not null check (rating >= 1 and rating <= 5),
+        created_at timestamptz not null default now()
+      );
+
+      alter table public.reviews enable row level security;
+
+      create policy "Allow public read reviews"
+      on public.reviews
+      for select
+      to anon
+      using (true);
+
+      create policy "Allow public insert reviews"
+      on public.reviews
+      for insert
+      to anon
+      with check (true);
+      -->
    </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
