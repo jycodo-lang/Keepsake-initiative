@@ -1,312 +1,1478 @@
-<style>
-   :root{
-   --bg:#050816;
-   --bg2:#0B1020;
-   --surface: rgba(15,23,42,0.88);
-   --stroke: rgba(148,163,184,0.18);
-   --text: rgba(248,250,252,0.96);
-   --muted: rgba(226,232,240,0.78);
-   --muted2: rgba(203,213,225,0.62);
-   --accent:#8B5CF6;
-   --accent2:#22D3EE;
-   --radius:18px;
-   --shadow: 0 18px 48px rgba(0,0,0,0.42);
-   --shadow2: 0 10px 28px rgba(0,0,0,0.28);
-   --max: 1140px;
-   --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-   }
-   *{box-sizing:border-box}
-   html,body{height:100%}
-   body{
-   margin:0;
-   font-family:var(--font);
-   color:var(--text);
-   background:
-   radial-gradient(900px 520px at 10% 0%, rgba(139,92,246,0.20), transparent 60%),
-   radial-gradient(800px 520px at 90% 20%, rgba(34,211,238,0.14), transparent 55%),
-   linear-gradient(180deg, var(--bg2), var(--bg));
-   overflow-x:hidden;
-   }
-   a{color:var(--accent2); text-decoration:none}
-   a:hover{text-decoration:underline; text-underline-offset:3px}
-   .container{ width:min(var(--max), calc(100% - 32px)); margin:0 auto; }
-   header.nav{
-   position:sticky; top:0; z-index:50;
-   background: rgba(8,12,26,0.84);
-   border-bottom: 1px solid var(--stroke);
-   backdrop-filter: blur(12px);
-   }
-   .nav-inner{ display:flex; align-items:center; justify-content:space-between; padding: 14px 0; gap:14px; }
-   .brand{
-   display:flex; align-items:center; gap:12px;
-   color:var(--text); text-decoration:none;
-   min-width: 240px;
-   }
-   .brand img{
-   width:44px; height:44px; border-radius:14px;
-   border:1px solid var(--stroke);
-   box-shadow: var(--shadow2);
-   background: rgba(255,255,255,0.04);
-   object-fit:cover;
-   }
-   .brand-title{ font-weight: 900; letter-spacing:-0.2px; line-height:1.1; }
-   .brand-sub{ color:var(--muted2); font-size:12.5px; margin-top:2px; }
-   nav.links{ display:flex; gap:16px; flex-wrap:wrap; align-items:center; justify-content:flex-end; }
-   nav.links a{
-   color:var(--muted);
-   font-weight:800;
-   padding: 6px 0;
-   border-bottom: 2px solid transparent;
-   white-space:nowrap;
-   }
-   nav.links a.active{
-   color:var(--text);
-   border-bottom-color: rgba(139,92,246,0.55);
-   }
-   .nav-actions{ display:flex; gap:10px; align-items:center; }
-   .btn{
-   border:1px solid var(--stroke);
-   background: rgba(255,255,255,0.04);
-   color: var(--text);
-   padding: 10px 14px;
-   border-radius: 14px;
-   cursor:pointer;
-   font-weight: 900;
-   box-shadow: var(--shadow2);
-   display:inline-flex;
-   align-items:center;
-   justify-content:center;
-   gap:8px;
-   }
-   .btn:hover{ transform: translateY(-1px); }
-   .btn:active{ transform: translateY(0px); }
-   .btn.primary{
-   border-color: rgba(139,92,246,0.35);
-   background: linear-gradient(135deg, rgba(139,92,246,0.95), rgba(34,211,238,0.78));
-   color: #F8FAFC;
-   box-shadow: 0 16px 32px rgba(34,211,238,0.14);
-   }
-   .btn.ghost{ background: rgba(255,255,255,0.03); box-shadow:none; }
-   main{ padding: 26px 0 0; }
-   .page{ display:none; }
-   .page.active{ display:block; }
-   .card{
-   background: var(--surface);
-   border: 1px solid var(--stroke);
-   border-radius: var(--radius);
-   box-shadow: var(--shadow);
-   }
-   .card.pad{ padding: 18px; }
-   h1{
-   margin:0 0 10px;
-   font-size: clamp(28px, 3.6vw, 44px);
-   line-height: 1.08;
-   letter-spacing: -0.6px;
-   color: var(--text);
-   }
-   h2{ margin:0 0 8px; font-size:20px; letter-spacing:-0.2px; color: var(--text); }
-   h3{ margin:0 0 6px; font-size:16px; letter-spacing:-0.1px; color: var(--text); }
-   p{ margin: 0 0 10px; color: var(--muted); line-height:1.65; font-size:16px; }
-   .lead{ font-size: 16.5px; color: rgba(241,245,249,0.86); }
-   .hero-grid{
-   display:grid;
-   grid-template-columns: 1.25fr 0.75fr;
-   gap: 16px;
-   align-items: stretch;
-   }
-   @media (max-width: 980px){
-   .hero-grid{ grid-template-columns: 1fr; }
-   .brand-sub{ display:none; }
-   nav.links{ gap:12px; }
-   }
-   .meta{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 10px; }
-   .tag{
-   display:inline-flex; align-items:center; gap:8px;
-   padding: 8px 10px;
-   border-radius: 999px;
-   background: rgba(139,92,246,0.14);
-   border: 1px solid rgba(139,92,246,0.24);
-   color: rgba(241,245,249,0.92);
-   font-weight: 900;
-   font-size: 13px;
-   }
-   .two{
-   display:grid;
-   grid-template-columns: 1fr 1fr;
-   gap: 14px;
-   align-items:start;
-   margin-top: 12px;
-   }
-   @media (max-width: 900px){
-   .two{ grid-template-columns:1fr; }
-   }
-   hr.sep{ border:none; height:1px; background: var(--stroke); margin: 14px 0; }
-   .info{
-   padding: 14px;
-   border-radius: 16px;
-   border: 1px solid var(--stroke);
-   background: rgba(15,23,42,0.72);
-   box-shadow: var(--shadow2);
-   }
-   .info p{ margin:0 0 10px; }
-   .info p:last-child{ margin-bottom:0; }
-   ul.clean{
-   margin: 10px 0 0;
-   padding-left: 18px;
-   color: var(--muted);
-   line-height:1.65;
-   }
-   ul.clean li{ margin: 6px 0; }
-   form{ display:grid; gap: 10px; }
-   label{
-   font-weight: 900;
-   font-size: 13px;
-   color: rgba(241,245,249,0.90);
-   display:block;
-   margin-bottom: 6px;
-   }
-   input, textarea, select{
-   width:100%;
-   padding: 11px 12px;
-   border-radius: 14px;
-   border: 1px solid var(--stroke);
-   background: rgba(2,6,23,0.78);
-   outline:none;
-   color: var(--text);
-   font-size: 15px;
-   }
-   input::placeholder, textarea::placeholder{ color: rgba(203,213,225,0.46); }
-   textarea{ min-height: 120px; resize: vertical; }
-   .row{
-   display:grid;
-   grid-template-columns: 1fr 1fr;
-   gap: 10px;
-   }
-   @media (max-width: 700px){
-   .row{ grid-template-columns:1fr; }
-   }
-   .footer{
-   margin-top: 28px;
-   padding: 22px 0 36px;
-   border-top: 1px solid var(--stroke);
-   color:var(--muted2);
-   font-size: 14px;
-   }
-   .toast{
-   position: fixed;
-   bottom: 16px;
-   left: 50%;
-   transform: translateX(-50%);
-   background: rgba(2,6,23,0.96);
-   color: white;
-   padding: 12px 14px;
-   border-radius: 16px;
-   box-shadow: var(--shadow);
-   display:none;
-   max-width: min(600px, calc(100% - 24px));
-   z-index: 999;
-   border: 1px solid var(--stroke);
-   }
-   details{
-   border: 1px solid var(--stroke);
-   border-radius: 16px;
-   background: rgba(15,23,42,0.70);
-   padding: 12px;
-   }
-   summary{
-   cursor:pointer;
-   font-weight: 900;
-   color: rgba(241,245,249,0.92);
-   list-style: none;
-   }
-   summary::-webkit-details-marker{ display:none; }
-   .list{ display:grid; gap: 10px; margin-top: 12px; }
-   .article-card{
-   padding: 14px;
-   border-radius: 16px;
-   border: 1px solid var(--stroke);
-   background: rgba(15,23,42,0.74);
-   box-shadow: var(--shadow2);
-   }
-   .article-card h3{ margin:0 0 6px; }
-   .article-meta{ color: var(--muted2); font-size: 13px; margin-bottom: 10px; }
-   .small{ color: var(--muted2); font-size: 13px; }
-   .pill{
-   display:inline-flex;
-   align-items:center;
-   padding: 6px 10px;
-   border-radius: 999px;
-   border: 1px solid rgba(139,92,246,0.28);
-   background: rgba(139,92,246,0.12);
-   font-weight: 900;
-   font-size: 12.5px;
-   color: rgba(241,245,249,0.92);
-   }
-   .team-grid{
-   display:grid;
-   grid-template-columns: repeat(3, 1fr);
-   gap: 14px;
-   margin-top: 12px;
-   }
-   @media (max-width: 960px){
-   .team-grid{ grid-template-columns:1fr; }
-   }
-   .team-card{
-   padding: 14px;
-   border-radius: 16px;
-   border: 1px solid var(--stroke);
-   background: rgba(15,23,42,0.74);
-   box-shadow: var(--shadow2);
-   text-align:center;
-   }
-   .team-photo{
-   width: 100%;
-   max-width: 280px;
-   height: 280px;
-   object-fit: cover;
-   border-radius: 18px;
-   border: 1px solid var(--stroke);
-   box-shadow: var(--shadow2);
-   background: rgba(255,255,255,0.04);
-   display:block;
-   margin: 0 auto 12px;
-   }
-   @media (max-width: 520px){
-   .team-photo{ max-width: 240px; height: 240px; }
-   }
-   .team-name{ font-weight: 900; color: var(--text); }
-   .team-roleline{ margin-top: 4px; font-size: 13px; color: var(--muted2); font-weight: 800; }
-   .team-desc{ margin-top: 10px; }
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <title>The Keepsake Initiative</title>
+      <meta name="description" content="Joy visits, custom songs, and keepsake stories for children facing chronic or life-threatening illness." />
+      <style>
+         :root{
+         --bg:#050816;
+         --bg2:#0B1020;
+         --surface: rgba(15,23,42,0.88);
+         --stroke: rgba(148,163,184,0.18);
+         --text: rgba(248,250,252,0.96);
+         --muted: rgba(226,232,240,0.78);
+         --muted2: rgba(203,213,225,0.62);
+         --accent:#8B5CF6;
+         --accent2:#22D3EE;
+         --radius:18px;
+         --shadow: 0 18px 48px rgba(0,0,0,0.42);
+         --shadow2: 0 10px 28px rgba(0,0,0,0.28);
+         --max: 1140px;
+         --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+         }
+         *{box-sizing:border-box}
+         html,body{height:100%}
+         body{
+         margin:0;
+         font-family:var(--font);
+         color:var(--text);
+         background:
+         radial-gradient(900px 520px at 10% 0%, rgba(139,92,246,0.20), transparent 60%),
+         radial-gradient(800px 520px at 90% 20%, rgba(34,211,238,0.14), transparent 55%),
+         linear-gradient(180deg, var(--bg2), var(--bg));
+         overflow-x:hidden;
+         }
+         a{color:var(--accent2); text-decoration:none}
+         a:hover{text-decoration:underline; text-underline-offset:3px}
+         .container{ width:min(var(--max), calc(100% - 32px)); margin:0 auto; }
+         header.nav{
+         position:sticky; top:0; z-index:50;
+         background: rgba(8,12,26,0.84);
+         border-bottom: 1px solid var(--stroke);
+         backdrop-filter: blur(12px);
+         }
+         .nav-inner{ display:flex; align-items:center; justify-content:space-between; padding: 14px 0; gap:14px; }
+         .brand{
+         display:flex; align-items:center; gap:12px;
+         color:var(--text); text-decoration:none;
+         min-width: 240px;
+         }
+         .brand img{
+         width:44px; height:44px; border-radius:14px;
+         border:1px solid var(--stroke);
+         box-shadow: var(--shadow2);
+         background: rgba(255,255,255,0.04);
+         object-fit:cover;
+         }
+         .brand-title{ font-weight: 900; letter-spacing:-0.2px; line-height:1.1; }
+         .brand-sub{ color:var(--muted2); font-size:12.5px; margin-top:2px; }
+         nav.links{ display:flex; gap:16px; flex-wrap:wrap; align-items:center; justify-content:flex-end; }
+         nav.links a{
+         color:var(--muted);
+         font-weight:800;
+         padding: 6px 0;
+         border-bottom: 2px solid transparent;
+         white-space:nowrap;
+         }
+         nav.links a.active{
+         color:var(--text);
+         border-bottom-color: rgba(139,92,246,0.55);
+         }
+         .nav-actions{ display:flex; gap:10px; align-items:center; }
+         .btn{
+         border:1px solid var(--stroke);
+         background: rgba(255,255,255,0.04);
+         color: var(--text);
+         padding: 10px 14px;
+         border-radius: 14px;
+         cursor:pointer;
+         font-weight: 900;
+         box-shadow: var(--shadow2);
+         display:inline-flex;
+         align-items:center;
+         justify-content:center;
+         gap:8px;
+         }
+         .btn:hover{ transform: translateY(-1px); }
+         .btn:active{ transform: translateY(0px); }
+         .btn.primary{
+         border-color: rgba(139,92,246,0.35);
+         background: linear-gradient(135deg, rgba(139,92,246,0.95), rgba(34,211,238,0.78));
+         color: #F8FAFC;
+         box-shadow: 0 16px 32px rgba(34,211,238,0.14);
+         }
+         .btn.ghost{ background: rgba(255,255,255,0.03); box-shadow:none; }
+         main{ padding: 26px 0 0; }
+         .page{ display:none; }
+         .page.active{ display:block; }
+         .card{
+         background: var(--surface);
+         border: 1px solid var(--stroke);
+         border-radius: var(--radius);
+         box-shadow: var(--shadow);
+         }
+         .card.pad{ padding: 18px; }
+         h1{
+         margin:0 0 10px;
+         font-size: clamp(28px, 3.6vw, 44px);
+         line-height: 1.08;
+         letter-spacing: -0.6px;
+         color: var(--text);
+         }
+         h2{ margin:0 0 8px; font-size:20px; letter-spacing:-0.2px; color: var(--text); }
+         h3{ margin:0 0 6px; font-size:16px; letter-spacing:-0.1px; color: var(--text); }
+         p{ margin: 0 0 10px; color: var(--muted); line-height:1.65; font-size:16px; }
+         .lead{ font-size: 16.5px; color: rgba(241,245,249,0.86); }
+         .hero-grid{
+         display:grid;
+         grid-template-columns: 1.25fr 0.75fr;
+         gap: 16px;
+         align-items: stretch;
+         }
+         @media (max-width: 980px){
+         .hero-grid{ grid-template-columns: 1fr; }
+         .brand-sub{ display:none; }
+         nav.links{ gap:12px; }
+         }
+         .meta{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 10px; }
+         .tag{
+         display:inline-flex; align-items:center; gap:8px;
+         padding: 8px 10px;
+         border-radius: 999px;
+         background: rgba(139,92,246,0.14);
+         border: 1px solid rgba(139,92,246,0.24);
+         color: rgba(241,245,249,0.92);
+         font-weight: 900;
+         font-size: 13px;
+         }
+         .two{
+         display:grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 14px;
+         align-items:start;
+         margin-top: 12px;
+         }
+         @media (max-width: 900px){
+         .two{ grid-template-columns:1fr; }
+         }
+         hr.sep{ border:none; height:1px; background: var(--stroke); margin: 14px 0; }
+         .info{
+         padding: 14px;
+         border-radius: 16px;
+         border: 1px solid var(--stroke);
+         background: rgba(15,23,42,0.72);
+         box-shadow: var(--shadow2);
+         }
+         .info p{ margin:0 0 10px; }
+         .info p:last-child{ margin-bottom:0; }
+         ul.clean{
+         margin: 10px 0 0;
+         padding-left: 18px;
+         color: var(--muted);
+         line-height:1.65;
+         }
+         ul.clean li{ margin: 6px 0; }
+         form{ display:grid; gap: 10px; }
+         label{
+         font-weight: 900;
+         font-size: 13px;
+         color: rgba(241,245,249,0.90);
+         display:block;
+         margin-bottom: 6px;
+         }
+         input, textarea, select{
+         width:100%;
+         padding: 11px 12px;
+         border-radius: 14px;
+         border: 1px solid var(--stroke);
+         background: rgba(2,6,23,0.78);
+         outline:none;
+         color: var(--text);
+         font-size: 15px;
+         }
+         input::placeholder, textarea::placeholder{ color: rgba(203,213,225,0.46); }
+         textarea{ min-height: 120px; resize: vertical; }
+         .row{
+         display:grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 10px;
+         }
+         @media (max-width: 700px){
+         .row{ grid-template-columns:1fr; }
+         }
+         .footer{
+         margin-top: 28px;
+         padding: 22px 0 36px;
+         border-top: 1px solid var(--stroke);
+         color:var(--muted2);
+         font-size: 14px;
+         }
+         .toast{
+         position: fixed;
+         bottom: 16px;
+         left: 50%;
+         transform: translateX(-50%);
+         background: rgba(2,6,23,0.96);
+         color: white;
+         padding: 12px 14px;
+         border-radius: 16px;
+         box-shadow: var(--shadow);
+         display:none;
+         max-width: min(600px, calc(100% - 24px));
+         z-index: 999;
+         border: 1px solid var(--stroke);
+         }
+         details{
+         border: 1px solid var(--stroke);
+         border-radius: 16px;
+         background: rgba(15,23,42,0.70);
+         padding: 12px;
+         }
+         summary{
+         cursor:pointer;
+         font-weight: 900;
+         color: rgba(241,245,249,0.92);
+         list-style: none;
+         }
+         summary::-webkit-details-marker{ display:none; }
+         .list{ display:grid; gap: 10px; margin-top: 12px; }
+         .article-card{
+         padding: 14px;
+         border-radius: 16px;
+         border: 1px solid var(--stroke);
+         background: rgba(15,23,42,0.74);
+         box-shadow: var(--shadow2);
+         }
+         .article-card h3{ margin:0 0 6px; }
+         .article-meta{ color: var(--muted2); font-size: 13px; margin-bottom: 10px; }
+         .small{ color: var(--muted2); font-size: 13px; }
+         .pill{
+         display:inline-flex;
+         align-items:center;
+         padding: 6px 10px;
+         border-radius: 999px;
+         border: 1px solid rgba(139,92,246,0.28);
+         background: rgba(139,92,246,0.12);
+         font-weight: 900;
+         font-size: 12.5px;
+         color: rgba(241,245,249,0.92);
+         }
+         /* ====== TEAM (FIXED): BIG PHOTO ABOVE TEXT ====== */
+         .team-grid{
+         display:grid;
+         grid-template-columns: repeat(3, 1fr);
+         gap: 14px;
+         margin-top: 12px;
+         }
+         @media (max-width: 960px){
+         .team-grid{ grid-template-columns:1fr; }
+         }
+         .team-card{
+         padding: 14px;
+         border-radius: 16px;
+         border: 1px solid var(--stroke);
+         background: rgba(15,23,42,0.74);
+         box-shadow: var(--shadow2);
+         text-align:center;
+         }
+         .team-photo{
+         width: 100%;
+         max-width: 280px;
+         height: 280px;
+         object-fit: cover;
+         border-radius: 18px;
+         border: 1px solid var(--stroke);
+         box-shadow: var(--shadow2);
+         background: rgba(255,255,255,0.04);
+         display:block;
+         margin: 0 auto 12px;
+         }
+         @media (max-width: 520px){
+         .team-photo{ max-width: 240px; height: 240px; }
+         }
+         .team-name{ font-weight: 900; color: var(--text); }
+         .team-roleline{ margin-top: 4px; font-size: 13px; color: var(--muted2); font-weight: 800; }
+         .team-desc{ margin-top: 10px; }
 
-   .stars{
-     display:flex;
-     gap:6px;
-     align-items:center;
-     user-select:none;
-   }
-   .star-btn{
-     width:40px;
-     height:40px;
-     border-radius: 12px;
-     border:1px solid var(--stroke);
-     background: rgba(15,23,42,0.92);
-     cursor:pointer;
-     display:grid;
-     place-items:center;
-     font-size: 20px;
-     box-shadow: var(--shadow2);
-     line-height:1;
-     color: rgba(241,245,249,0.92);
-   }
-   .star-btn:hover{ transform: translateY(-1px); }
-   .star-btn:active{ transform: translateY(0px); }
-   .star-btn.on{
-     border-color: rgba(139,92,246,0.40);
-     background: rgba(139,92,246,0.18);
-   }
-   .star-help{
-     color: var(--muted2);
-     font-size: 13px;
-     margin-top: 6px;
-   }
-</style>
+         .stars{
+           display:flex;
+           gap:6px;
+           align-items:center;
+           user-select:none;
+         }
+         .star-btn{
+           width:40px;
+           height:40px;
+           border-radius: 12px;
+           border:1px solid var(--stroke);
+           background: rgba(15,23,42,0.92);
+           cursor:pointer;
+           display:grid;
+           place-items:center;
+           font-size: 20px;
+           box-shadow: var(--shadow2);
+           line-height:1;
+           color: rgba(241,245,249,0.92);
+         }
+         .star-btn:hover{ transform: translateY(-1px); }
+         .star-btn:active{ transform: translateY(0px); }
+         .star-btn.on{
+           border-color: rgba(139,92,246,0.40);
+           background: rgba(139,92,246,0.18);
+         }
+         .star-help{
+           color: var(--muted2);
+           font-size: 13px;
+           margin-top: 6px;
+         }
+      </style>
+   </head>
+
+   <body>
+      <header class="nav">
+         <div class="container nav-inner">
+            <a class="brand" href="#" data-go="home" aria-label="The Keepsake Initiative home">
+               <img src="IMG_6907.JPG" alt="The Keepsake Initiative logo">
+               <div>
+                  <div class="brand-title">The Keepsake Initiative</div>
+                  <div class="brand-sub">Joy visits • Custom songs • Keepsake stories</div>
+               </div>
+            </a>
+
+            <nav class="links" aria-label="Primary">
+               <a href="#home" data-go="home">Home</a>
+               <a href="#keepsakes" data-go="keepsakes">Keepsakes</a>
+               <a href="#testimonials" data-go="testimonials">Testimonials</a>
+               <a href="#reviews" data-go="reviews">Reviews</a>
+               <a href="#articles" data-go="articles">Articles</a>
+               <a href="#resources" data-go="resources">Resources</a>
+               <a href="#chapter" data-go="chapter">Start a Chapter</a>
+               <a href="#team" data-go="team">Meet Our Team</a>
+               <a href="#donate" data-go="donate">Donate</a>
+               <a href="#about" data-go="about">About & Contact</a>
+            </nav>
+
+            <div class="nav-actions">
+               <button class="btn primary" type="button" data-go="donate">One Time Only Payment</button>
+            </div>
+         </div>
+      </header>
+
+      <main class="container">
+         <!--HOME-->
+         <section class="page active" id="page-home" aria-labelledby="home-title">
+            <div class="card pad">
+               <div class="hero-grid">
+                  <div>
+                     <h1 id="home-title">Joy that lasts forever.</h1>
+                     <p class="lead">
+                        The Keepsake Initiative brings joy, creativity, and comfort to children facing chronic or life-threatening illnesses.
+                        Through music, storytelling, and meaningful experiences, we create personalized keepsakes that families can treasure forever.
+                     </p>
+                     <div class="meta">
+                        <span class="tag">🎵 Custom songs</span>
+                        <span class="tag">📚 Short stories</span>
+                        <span class="tag">🧸 Hospital joy visits</span>
+                        <span class="tag">🕊️ Keepsakes for families</span>
+                     </div>
+
+                     <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
+                        <button class="btn primary" type="button" data-go="resources">Request / Forms</button>
+                        <button class="btn" type="button" data-go="keepsakes">See Keepsakes</button>
+                     </div>
+
+                     <hr class="sep" />
+
+                     <div class="info">
+                        <h2>One key fact</h2>
+                        <p id="stat-line">
+                           88.5% of children report feeling anxiety during hospitalization. Studies of children aged 0–5 have shown that nearly
+                           88.5% are diagnosed with Anxiety in Hospitalized Children due to the stressful nature of the clinical environment.
+                        </p>
+                     </div>
+
+                     <div class="info" style="margin-top:14px;">
+                        <h2>What we do</h2>
+                        <ul class="clean">
+                           <li>Coordinate hospital visits (with permission) to provide fun, engaging days for pediatric patients</li>
+                           <li>Bring toys, books, songs, and interactive activities</li>
+                           <li>Write custom songs and short stories for each child based on their journey, personality, and dreams</li>
+                           <li>Record and preserve these creations as keepsakes for families</li>
+                           <li>Raise awareness about chronic and life-threatening childhood conditions</li>
+                           <li>Build student-led chapters to expand impact nationwide</li>
+                        </ul>
+                     </div>
+
+                     <div class="info" style="margin-top:14px;">
+                        <h2>What we are not</h2>
+                        <ul class="clean">
+                           <li>We are not a wish-granting organization like Make-A-Wish Foundation.</li>
+                           <li>We do not replace clinical child life services.</li>
+                           <li>We partner with hospitals and child life departments to create uplifting experiences.</li>
+                        </ul>
+                     </div>
+
+                     <div class="info" style="margin-top:14px;">
+                        <h2>Founder’s Statement</h2>
+                        <p>When I was 7, I fell unconscious on a trip to the hospital for what we thought was simply a really bad flu, and woke up days later with a tube in my throat and beeping machines surrounding me. I was told I’d had pneumonia in both lungs, and it had progressed unchecked, due to a misdiagnosis, leading to multi-organ failure.</p>
+
+                        <p>I was in the ICU for weeks, in the hospital for months, and it was a harrowing experience for not only me, but my family. It still feels surreal whenever I think about it, that I was this close to dying, but am now alive, happy, and grateful.</p>
+
+                        <p>Years later, my memories of the hospital, which fuel my ambition and desire to be a pediatrician, seem…incomplete. Because, in truth, my memories are limited to IVs, blood transfusions, multiple surgeries, and the pain of my parents, who had to silently watch their child go through this.</p>
+
+                        <p><strong>But I don’t remember my strength.</strong></p>
+                        <p><strong>I don’t remember my bravery.</strong></p>
+
+                        <p>I know people visited. My parents’ friends. My second-grade teacher. But I was often asleep. And even when I was awake, I felt alone. Unheard. Over time, my story became something reduced — a dramatic anecdote for a college essay, or a traumatic tale told to new friends. My resilience was something that felt too painful to acknowledge.</p>
+
+                        <p>But that shouldn't be true. I was a child who went through an experience that could have broken me, yet I came out stronger. I'm resilient, not a miracle to be whispered about. Not a tragedy to be simplified. I am proof of my strength.</p>
+
+                        <p>And so is every child living through a chronic or life-threatening illness.</p>
+
+                        <p>Their stories deserve to be remembered not only for the pain but for the courage that they display, each and every day in the hospital. For the story that they have to share, because it is a beautiful, inspiring keepsake that deserves to be shared, long after their pain subsides, long after a new chapter starts in their lives.</p>
+
+                        <p><strong>That’s why I created The Keepsake Initiative.</strong></p>
+
+                        <p>We make personal short stories, poems, and songs, custom-made for every child, in order to celebrate their resilience and bravery. Every family deserves to remember their struggle with something positive, and we aim to give them this gift. The gift of a keepsake, that shifts their narrative from pain to resilience.</p>
+
+                        <p>Beyond keepsakes, our team brings crafts, books, toys, music, and art into hospital rooms. We aim to give children something simple yet powerful: a moment of joy. A moment that feels golden, even under the steady, bright, fluorescent lights, surrounded by beeping machines.</p>
+
+                        <p><strong>We cannot cure illness.</strong></p>
+                        <p><strong>But we can ease loneliness.</strong></p>
+                        <p><strong>We can honor bravery.</strong></p>
+                        <p><strong>We can create something that lasts.</strong></p>
+
+                        <p><strong>And sometimes, that is enough.</strong></p>
+                     </div>
+                  </div>
+
+                  <aside>
+                     <div class="info">
+                        <h2 style="margin-top:0;">A simple 3-step model</h2>
+                        <ul class="clean">
+                           <li><strong>Joy Visit</strong> — toys, books, songs, and activities (with permission)</li>
+                           <li><strong>Personal Creation</strong> — custom story + custom song</li>
+                           <li><strong>The Keepsake</strong> — preserved for the family (shared only with consent)</li>
+                        </ul>
+                     </div>
+
+                     <div class="info" style="margin-top:14px;">
+                        <h2>Quick actions</h2>
+                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                           <button class="btn primary" type="button" data-go="donate">One Time Only Payment</button>
+                           <button class="btn" type="button" data-go="chapter">Start a Chapter</button>
+                           <button class="btn" type="button" data-go="about">Contact</button>
+                        </div>
+                        <p class="small" style="margin-top:10px;">Donations are processed via Stripe (Visa supported).</p>
+                     </div>
+                  </aside>
+               </div>
+            </div>
+         </section>
+
+         <!-- KEEPSAKES -->
+         <section class="page" id="page-keepsakes" aria-labelledby="keepsakes-title">
+            <div class="card pad">
+               <h1 id="keepsakes-title">Keepsakes</h1>
+               <p class="lead">
+                  Each keepsake is written personally for a child — based on their interests, strengths, and struggles — and delivered as a story + recorded song.
+               </p>
+
+               <div class="two">
+                  <div class="info">
+                     <h2>Sample story</h2>
+                     <p class="small"><strong>The Girl Who Collected Sunlight</strong></p>
+                     <details style="margin-top:10px;">
+                        <summary>Open story</summary>
+                        <p style="white-space:pre-wrap;">
+Her name was Ishu - And every morning, long before the birds would awaken,
+She’d jump off the bed she said was her little cave,
+And tilt her head towards the sky,
+
+And every morning, the rays of the sun would fall,
+Framing her curls gold,
+As she’d reach her hands out,
+Balling her fists around the light,
+She’d take that light with her,
+Wherever she went -
+
+In her laugh that always arrives a little too early,
+As if, perhaps, joy is an urgent business.
+In the way she always had a tale to share,
+Or a song to belt at the top of her lungs.
+
+In the way, when days became longer,
+Longer than the ticking of the clock on her nightstand,
+Longer than the beeping of the machines,
+She’d make up stories,
+of dogs, of parrots,
+Of talking walls,
+
+But when night fell,
+When the walls stopped talking,
+When the dogs and parrots went to sleep,
+When the sunlight was starting to fade,
+Ishu didn’t pretend to be fearless,
+But she was still brave -
+
+Her bravery was measured in tiny bits and pieces,
+In how, when it felt to loud,
+she asked for music,
+When it felt to confusing,
+she asked questions -
+Ones that stumped even the genius of her older sister,
+Who was forced to agree, that 2 + 2 is 5.
+
+Ishu collected sunlight,
+Because sunlight was a promise -
+One of a new day,
+And Ishu was a promise, too-
+Of the fact that courage doesn’t always roar,
+Sometimes it wears fuzzy socks,
+Sometimes it giggles at the silliest things,
+And sometimes it looks out the window and says,
+“Look. The light is still here.”
+                        </p>
+                     </details>
+                  </div>
+
+                  <div class="info">
+                     <h2>Sample song</h2>
+                     <p><span class="pill">Smooth Sailor</span></p>
+                     <p class="small">Listen to out sample <strong>smooth sailor</strong>.</p>
+                     <audio controls preload="none" style="width:100%; margin-top:10px;">
+                        <source src="smooth-sailor.mp3" type="audio/mpeg" />
+                        Your browser does not support the audio element.
+                     </audio>
+
+                     <hr class="sep" />
+
+                     <p class="small">Sharing keepsakes publicly should only happen with written parental/guardian permission.</p>
+
+                     <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+                        <button class="btn primary" type="button" data-go="resources">Request a keepsake</button>
+                        <button class="btn" type="button" data-go="articles">Read Articles</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- TESTIMONIALS -->
+         <section class="page" id="page-testimonials" aria-labelledby="testimonials-title">
+            <div class="card pad">
+               <h1 id="testimonials-title">Testimonials</h1>
+               <p class="lead">Coming Soon</p>
+               <div class="info">
+                  <p class="small">This page will include personal experiences shared with consent.</p>
+               </div>
+            </div>
+         </section>
+
+         <!-- REVIEWS (ADDED) -->
+         <section class="page" id="page-reviews" aria-labelledby="reviews-title">
+           <div class="card pad">
+             <h1 id="reviews-title">Reviews</h1>
+             <p class="lead">Leave a comment and a 1–5 star rating. Your review only submits when you click <strong>Submit</strong>.</p>
+
+             <div class="two">
+               <div class="info">
+                 <h2>Write a review</h2>
+
+                 <form id="review-form">
+                   <input type="hidden" name="form_type" value="Review" />
+
+                   <div class="row">
+                     <div>
+                       <label>Your name</label>
+                       <input name="name" required />
+                     </div>
+                     <div>
+                       <label>Your email</label>
+                       <input name="email" placeholder="you@email.com" required />
+                     </div>
+                   </div>
+
+                   <div>
+                     <label>Rating</label>
+                     <div class="stars" role="radiogroup" aria-label="Rating from 1 to 5 stars">
+                       <button class="star-btn" type="button" data-star="1" aria-label="1 star">★</button>
+                       <button class="star-btn" type="button" data-star="2" aria-label="2 stars">★</button>
+                       <button class="star-btn" type="button" data-star="3" aria-label="3 stars">★</button>
+                       <button class="star-btn" type="button" data-star="4" aria-label="4 stars">★</button>
+                       <button class="star-btn" type="button" data-star="5" aria-label="5 stars">★</button>
+                     </div>
+                     <div class="star-help" id="rating-help">Select 1–5 stars.</div>
+
+                     <input type="hidden" name="rating" id="review-rating" value="" required />
+                   </div>
+
+                   <div>
+                     <label>Comment</label>
+                     <textarea name="comment" placeholder="Write your review..." required></textarea>
+                   </div>
+
+                   <button class="btn primary" type="submit">Submit</button>
+                   <div id="review-result" class="small"></div>
+                 </form>
+               </div>
+
+               <div class="info">
+                 <h2>Recent reviews</h2>
+                 <div class="list" id="reviews-list"></div>
+                 <p class="small" id="reviews-empty" style="margin-top:10px;">No reviews yet.</p>
+               </div>
+             </div>
+           </div>
+         </section>
+
+         <!-- ARTICLES -->
+         <section class="page" id="page-articles" aria-labelledby="articles-title">
+            <div class="card pad">
+               <h1 id="articles-title">Articles</h1>
+               <p class="lead">Original educational articles written by our team.</p>
+
+               <div class="list" style="margin-top:12px;">
+                  <div class="article-card">
+                     <div class="pill">Childhood Cancer Education</div>
+                     <h3 style="margin-top:10px;">Understanding The Implications of Leukemia in Children</h3>
+                     <div class="article-meta">By Ruhani N.</div>
+
+                     <p>
+                        Leukemia is one of the most prevalent of the main childhood cancers, the most common out of all the main types - brain, spinal cord, lymphatic, blood, and solid tumors. It originates in the blood and bone marrow, however it affects the entirety of the child, often weakening their immune system either through it’s own effect, or through the rigorous chemotherapy or radiation therapy involved in order to heal the patient.
+                     </p>
+
+                     <p>
+                        White blood cells in the children’s bodies start acting…dysfunctional. They don’t work the way they’re supposed to, instead dividing uncontrollably, until it’s a problem. This all starts in the bone marrow - inside the bone marrow, the three main types of blood cells (red, white, and platelets) are made. A single, immature, white blood cell develops a genetic mutation that causes it to stay immature in what is called a “blast” state, and then moves on to multiply uncontrollably, as the switch that tells it to stop replicating is turned off. In some cases, the “die” switch that triggers cell death (apoptosis) is flipped off as well. This leads to the bone marrow to become overcrowded with abnormal white blood cells, leaving little room for the healthy blood-forming cells left. This leads to anemia - a reduction in the count of red blood cells - which causes a shortness of breath, fatigue, paling of skin, and weakness. This also lowers the child’s platelet counts, leading to easy bruising, more frequent nosebleeds, gum-bleeding, and the formation of small spots called ‘petechiae’ on the skin. And, even though the white blood cell count is technically higher, the cells are abnormal and dysfunctional, and end up disrupting immune health, often making children more prone to contracting infectious disease. These abnormal cells can travel throughout the body, settling on common targets like the liver, spleen, and even some brain and spinal fluid. In acute leukemia, these symptoms manifest quickly and often require urgent treatment, however, in chronic leukemia, these symptoms may manifest gradually and go unnoticed.
+                     </p>
+
+                     <p>
+                        It might be easy to blame oneself, chalk it up to “We should have made them eat their greens”. However, it’s not so simple. Cancer in general, especially childhood leukemia, has no clear cause. It may be genetic mutations caused by hereditary condition, or it may be exposure to radiation or harmful chemicals. But we do not yet fully understand its causes, as of yet.
+                     </p>
+
+                     <p>
+                        However, the survival rates for Leukemia, especially in children, has increased over the years, with new targeted therapies added to the growing list of chemotherapy and radiation therapy options, for children. There is much ambiguity, but also much hope, and in the U.S., the overall five-year relative survival rate for childhood leukemia is now over 90 % thanks to modern treatments — a dramatic improvement from decades ago.
+                     </p>
+
+                     <p>
+                        Leukemia is a complex and, often, overwhelming diagnosis. However, it’s important to understand that behind treatment plans and medical reports, is a child who has favorite songs, big ideas and dreams, and a heart of gold, that simply wants to survive, and have fun. It’s important that one remembers that they are far more than this diagnosis. Medicine works to heal the body, however creativity, emotional support, healing, and connection, work to heal the spirit. Understanding leukemia doesn’t just mean understanding the science and technology behind it, but also means understanding the humanity, as well.
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- RESOURCES -->
+         <section class="page" id="page-resources" aria-labelledby="resources-title">
+            <div class="card pad">
+               <h1 id="resources-title">Resources</h1>
+               <p class="lead">Child life information, a self-help guide for parents, and request forms for families and hospitals.</p>
+
+               <div class="two">
+                  <div class="info">
+                     <h2>Child Life information</h2>
+                     <p>
+                        Child life specialists are trained professionals who support children and families during medical experiences.
+                        They help with coping strategies, medical play and preparation, emotional support, and family communication.
+                     </p>
+                     <ul class="clean">
+                        <li>Preparation and explanation at a developmentally appropriate level</li>
+                        <li>Therapeutic play and distraction during procedures</li>
+                        <li>Support for siblings and caregivers</li>
+                        <li>Reducing fear, stress, and anxiety during care</li>
+                     </ul>
+                  </div>
+
+                  <div class="info">
+                     <h2>Parent self-help guide</h2>
+                     <p class="small">Practical tools for parents coping with stress while caring for a hospitalized child.</p>
+
+                     <details style="margin-top:10px;">
+                        <summary>1) The 60-second reset</summary>
+                        <p>
+                           Breathe in for 4 seconds, hold for 2 seconds, breathe out for 6 seconds. Repeat 5 times.
+                           Then name: 5 things you see, 4 you feel, 3 you hear, 2 you smell, 1 you taste.
+                           The goal is not to “calm down instantly” — the goal is to interrupt spiraling.
+                        </p>
+                     </details>
+
+                     <details style="margin-top:10px;">
+                        <summary>2) The “tiny plan” for today</summary>
+                        <p>
+                           Pick 3 small tasks that protect your ability to function: (a) food, (b) water, (c) one supportive message or phone call.
+                           If you complete only these, today still counts.
+                        </p>
+                     </details>
+
+                     <details style="margin-top:10px;">
+                        <summary>3) A script for asking the care team</summary>
+                        <p>
+                           Use this: “Can you explain today’s plan in 3 bullets? What changes would be concerning?
+                           Who do I contact after hours if something changes?” Clear information lowers panic and prevents misunderstandings.
+                        </p>
+                     </details>
+
+                     <details style="margin-top:10px;">
+                        <summary>4) When guilt gets loud</summary>
+                        <p>
+                           Hospitals make time feel distorted. You may feel guilty for stepping out, eating, or resting. Rest is not abandonment.
+                           If you can, take 5–10 minutes outside the room or in a quiet hallway. Your child benefits when you’re resourced enough to stay steady.
+                        </p>
+                     </details>
+
+                     <details style="margin-top:10px;">
+                        <summary>5) A “support map” you can make in 2 minutes</summary>
+                        <p>
+                           Write 3 names: (1) The person you can text anytime, (2) The person who can run errands,
+                           (3) The person who can handle updates to friends/family. Delegation protects your mental health and reduces burnout.
+                        </p>
+                     </details>
+
+                     <details style="margin-top:10px;">
+                        <summary>6) If you feel emotionally unsafe</summary>
+                        <p>
+                           If you feel like you might harm yourself or you cannot stay safe, seek immediate help from local emergency services
+                           or the hospital’s support resources. You deserve support too.
+                        </p>
+                     </details>
+                  </div>
+               </div>
+
+               <hr class="sep" />
+
+               <div class="info">
+                  <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+                     <div>
+                        <h2 style="margin-bottom:6px;">Educational Resources Library</h2>
+                        <p class="small">This section rotates weekly. Each week, a different set of educational resources is shown.</p>
+                        <p class="small" id="resources-week-label"></p>
+                     </div>
+                     <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <button class="btn" type="button" id="resources-prev-week">Previous</button>
+                        <button class="btn primary" type="button" id="resources-this-week">This Week</button>
+                        <button class="btn" type="button" id="resources-next-week">Next</button>
+                     </div>
+                  </div>
+
+                  <div class="list" id="resources-articles-list" style="margin-top:12px;"></div>
+               </div>
+
+               <hr class="sep" />
+
+               <div class="two">
+                  <div class="info">
+                     <h2>Parent request form (Keepsake / visit)</h2>
+                     <form id="parent-request-form">
+                        <input type="hidden" name="form_type" value="Parent Request Form" />
+
+                        <div class="row">
+                           <div>
+                              <label>Parent/Guardian full name</label>
+                              <input name="guardian_name" required />
+                           </div>
+                           <div>
+                              <label>Email</label>
+                              <input name="email" placeholder="you@email.com" required />
+                           </div>
+                        </div>
+
+                        <div class="row">
+                           <div>
+                              <label>Phone (optional)</label>
+                              <input name="phone" placeholder="(###) ###-####" />
+                           </div>
+                           <div>
+                              <label>Best time to contact (optional)</label>
+                              <input name="contact_time" placeholder="e.g., evenings after 6pm" />
+                           </div>
+                        </div>
+
+                        <div class="row">
+                           <div>
+                              <label>Child first name</label>
+                              <input name="child_name" required />
+                           </div>
+                           <div>
+                              <label>Child age (optional)</label>
+                              <input name="child_age" type="number" min="0" max="21" />
+                           </div>
+                        </div>
+
+                        <div>
+                           <label>Child interests</label>
+                           <input name="child_interests" placeholder="e.g., music, drawing, animals, sports, games" required />
+                        </div>
+
+                        <div class="row">
+                           <div>
+                              <label>Request type</label>
+                              <select name="request_type">
+                                 <option>Joy visit + activities</option>
+                                 <option>Custom story keepsake</option>
+                                 <option>Custom song keepsake</option>
+                                 <option>Both story + song keepsake</option>
+                              </select>
+                           </div>
+                           <div>
+                              <label>Location</label>
+                              <input value="ONLY IN MICHIGAN" disabled />
+                           </div>
+                        </div>
+
+                        <div>
+                           <label>Additional notes (optional)</label>
+                           <textarea name="message" placeholder="Personality, favorite things, what you want the story/song to feel like."></textarea>
+                        </div>
+
+                        <div class="row">
+                           <div>
+                              <label>Permission to publish?</label>
+                              <select name="permission_share">
+                                 <option>No (private only)</option>
+                                 <option>Maybe (ask later)</option>
+                                 <option>Yes (publish anonymized)</option>
+                              </select>
+                           </div>
+                           <div>
+                              <label>Consent confirmed?</label>
+                              <select name="consent_confirmed">
+                                 <option>Yes (I’m the guardian)</option>
+                                 <option>No (I’m not the guardian)</option>
+                              </select>
+                           </div>
+                        </div>
+
+                        <button class="btn primary" type="submit">Submit parent request</button>
+                        <div id="parent-request-result" class="small"></div>
+                     </form>
+                  </div>
+
+                  <div class="info">
+                     <h2>Hospital partnership form</h2>
+                     <form id="hospital-form">
+                        <input type="hidden" name="form_type" value="Hospital Partnership Form" />
+
+                        <div class="row">
+                           <div>
+                              <label>Hospital / Organization name</label>
+                              <input name="hospital_name" required />
+                           </div>
+                           <div>
+                              <label>Contact name + role</label>
+                              <input name="contact_name_role" required />
+                           </div>
+                        </div>
+
+                        <div class="row">
+                           <div>
+                              <label>Email</label>
+                              <input name="email" placeholder="name@hospital.org" required />
+                           </div>
+                           <div>
+                              <label>Phone (optional)</label>
+                              <input name="phone" />
+                           </div>
+                        </div>
+
+                        <div>
+                           <label>What are you exploring?</label>
+                           <select name="interest_area">
+                              <option>Supervised pilot collaboration</option>
+                              <option>Creative engagement day</option>
+                              <option>Referral pathway for families</option>
+                              <option>Other</option>
+                           </select>
+                        </div>
+
+                        <div>
+                           <label>Notes</label>
+                           <textarea name="message" placeholder="Goals, constraints, safety/privacy requirements, and preferred next steps." required></textarea>
+                        </div>
+
+                        <button class="btn primary" type="submit">Submit hospital inquiry</button>
+                        <div id="hospital-result" class="small"></div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- START A CHAPTER -->
+         <section class="page" id="page-chapter" aria-labelledby="chapter-title">
+            <div class="card pad">
+               <h1 id="chapter-title">How to Start a Chapter</h1>
+               <p class="lead">We are expanding nationally through student chapters to expand impact and awareness.</p>
+
+               <div class="two">
+                  <div class="info">
+                     <h2>Chapter requirements</h2>
+                     <ul class="clean">
+                        <li>1 faculty advisor</li>
+                        <li>5–10 student members minimum</li>
+                        <li>Fundraising commitment</li>
+                        <li>Virtual training session</li>
+                        <li>Hospital partnership outreach (guided by the national board)</li>
+                     </ul>
+                  </div>
+                  <div class="info">
+                     <h2>Chapter responsibilities</h2>
+                     <ul class="clean">
+                        <li>Fundraise locally</li>
+                        <li>Write songs/stories</li>
+                        <li>Coordinate approved visits</li>
+                        <li>Spread awareness campaigns</li>
+                        <li>Submit impact reports</li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- MEET OUR TEAM -->
+         <section class="page" id="page-team" aria-labelledby="team-title">
+            <div class="card pad">
+               <h1 id="team-title">Meet Our Team</h1>
+               <p class="lead">Board of Directors</p>
+
+               <div class="team-grid">
+                  <div class="team-card">
+                     <img class="team-photo" src="Amogh.png" alt="Amogh Velivela">
+                     <div class="team-name">Amogh Velivela</div>
+                     <div class="team-roleline">Director of Administration and Co-Executive Director</div>
+                     <p class="small team-desc">
+                        Amogh is a Sophomore at Huron High School. Focused on biomedical engineering and rowing. Joined to help families experiencing hardship and to expand impact through organization and outreach.
+                     </p>
+                  </div>
+
+                  <div class="team-card">
+                     <img class="team-photo" src="gupta.jpg" alt="Kanishka Gupta">
+                     <div class="team-name">Kanishka Gupta</div>
+                     <div class="team-roleline">Co-Director of Song Making</div>
+                     <p class="small team-desc">
+                        Kanishka Gupta is a sophomore at Huron High School in Ann Arbor and is passionate about using his abilities to make a real difference in our community. In his free time, he enjoys playing tennis, reading books, and hanging out with friends and family.
+                     </p>
+                  </div>
+
+                  <div class="team-card">
+                     <img class="team-photo" src="IMG_5097.png" alt="Sadhvee Sridar">
+                     <div class="team-name">Sadhvee Sridar</div>
+                     <div class="team-roleline">Director of Operations</div>
+                     <p class="small team-desc">
+                        Hi! I'm Sadhvee, a high school student who enjoys biology, Ice skating, and anything pink. I love meeting new people and challenging myself. This organization is a perfect way to make someone's day a little better. I'm grateful to be a part of this amazing community that chooses to make a difference everyday.
+                     </p>
+                  </div>
+
+                  <div class="team-card">
+                     <img class="team-photo" src="janet.jpg" alt="Janet Yang">
+                     <div class="team-name">Janet Yang</div>
+                     <div class="team-roleline">Director of Legislation</div>
+                     <p class="small team-desc">
+                        I am currently 15 years old at Huron High School. I love skating and hope to pursue biomedical engineering and minor in business. I joined this nonprofit because I wanted to make a difference in people's lives and help make a difference in the world, even if its a small one.
+                     </p>
+                  </div>
+
+                  <div class="team-card">
+                     <img class="team-photo" src="ruhani.png" alt="Ruhani Nagrath">
+                     <div class="team-name">Ruhani Nagrath</div>
+                     <div class="team-roleline">Executive Director and Founder</div>
+                     <p class="small team-desc">
+                        I am a sophomore at Huron High School (Class of 2028) and the founder of The Keepsake Initiative. I created this organization after spending time in hospital care myself and experiencing firsthand how isolating and disorienting that environment can feel - especially for young patients. In the future, I hope to pursue a career in pediatric surgery and become a clinician working on pediatric-focused cancer therapies. Outside of my work, I have played badminton for seven years and love music, reading, and all things adrenaline. I am grateful for the opportunity to build something rooted in empathy, and I hope our work can offer even a small measure of comfort and light to families during challenging times.
+                     </p>
+                  </div>
+
+                  <div class="team-card">
+                     <img class="team-photo" src="Maxime.jpeg" alt="Maxime Song">
+                     <div class="team-name">Maxime Song</div>
+                     <div class="team-roleline">Director of Composition</div>
+                     <p class="small team-desc">
+                        Maxime Song is a sophomore at Huron High School. She uses music to provide her support to the organization, and to encourage the children to keep going.
+                     </p>
+                  </div>
+
+                  <div class="team-card">
+                     <img class="team-photo" src="kiya.jpeg" alt="Kiya Rostamian">
+                     <div class="team-name">Kiya Rostamian</div>
+                     <div class="team-roleline">Co-Director of Song Making</div>
+                     <p class="small team-desc">
+                        I am a 15 year old high schooler who loves to play tennis and help people out. I want to pursue medical school and I think this is a real opportunity to help with that. My goal is to bring joy and comfort to children that face chronic or life threatening diseases through music and more.
+                     </p>
+                  </div>
+
+                  <div class="team-card">
+                     <img class="team-photo" src="ammar.jpg" alt="Ammar Ali">
+                     <div class="team-name">Ammar Ali</div>
+                     <div class="team-roleline">Co-Director of Funding</div>
+                     <p class="small team-desc">
+                        Ammar Ali is a Sophomore at Huron High School, Class of 28 who enjoys playing sports in his free time. He hopes to bring joy to children going through difficult times.
+                     </p>
+                  </div>
+
+                  <div class="team-card">
+                     <img class="team-photo" src="ryan.jpg" alt="Ryan John">
+                     <div class="team-name">Ryan John</div>
+                     <div class="team-roleline">Director of Engineering Creations</div>
+                     <p class="small team-desc">
+                        Ryan John is a sophmore at Huron High school pursuing Engineering, he is fascinated in building and coding and enjoys playing sports like Rowing. Ryan joined the organization to help make peoples day better by creating small creations as <strong>Keepsakes</strong>.
+                     </p>
+                  </div>
+
+                  <div class="team-card">
+                     <img class="team-photo" src="efe.jpg" alt="Efe Ozgurel">
+                     <div class="team-name">Efe Ozgurel</div>
+                     <div class="team-roleline">Co-Director of Educational Outreach</div>
+                     <p class="small team-desc">
+                       I want to pursue sports medicine in my future or just be involved in sports in some way. I also want to help children who are less fortunate than others.
+                     </p>
+                  </div>
+
+                  <div class="team-card">
+                     <img class="team-photo" src="amelia.jpg" alt="Amelia Tomas">
+                     <div class="team-name">Amelia Tomas</div>
+                     <div class="team-roleline">Director of Advertising & Outreach</div>
+                     <p class="small team-desc">
+                        I am 16 years old and a sophmore at Huron High school. I am a second generation immigrant from Easten Europe and the Balkans, and am interested in psychology. I wanted to join this organization because I want to help spread and bring joy to those undergoing a hard time.
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- DONATE -->
+         <section class="page" id="page-donate" aria-labelledby="donate-title">
+            <div class="card pad">
+               <h1 id="donate-title">Donate</h1>
+               <p class="lead">Every child deserves joy. Every family deserves something to hold onto.</p>
+
+               <div class="two">
+                  <div class="info">
+                     <h2>One Time Only Payment</h2>
+                     <p class="small">This button opens Stripe checkout. People can donate more than once if they want.</p>
+                     <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+                        <a id="donate-once" class="btn primary" href="#" role="button">One Time Only Payment</a>
+                     </div>
+                     <p class="small" id="donate-status" style="margin-top:10px;"></p>
+                  </div>
+
+                  <div class="info">
+                     <h2>What donations support</h2>
+                     <ul class="clean">
+                        <li>Books, toys, art supplies</li>
+                        <li>Recording for songs and stories</li>
+                        <li>Hospital activity day materials</li>
+                        <li>Chapter expansion</li>
+                        <li>Nonprofit filing and operational costs</li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <!-- ABOUT & CONTACT -->
+         <section class="page" id="page-about" aria-labelledby="about-title">
+            <div class="card pad">
+               <h1 id="about-title">About & Contact</h1>
+               <p class="lead">
+                  The Keepsake Initiative began with one simple belief: Hospitals can be places of hope.
+                  Founded by students who experienced hospital life firsthand, our organization brings music,
+                  storytelling, and human connection to children facing long-term medical challenges.
+               </p>
+
+               <div class="two">
+                  <div class="info">
+                     <h2>Mission</h2>
+                     <p>
+                        The Keepsake Initiative brings joy, creativity, and comfort to children facing chronic or life-threatening illnesses.
+                        Through music, storytelling, and meaningful experiences, we create personalized keepsakes that families can treasure forever.
+                     </p>
+
+                     <h3 style="margin-top:12px;">Partnership model</h3>
+                     <ul class="clean">
+                        <li>We coordinate with hospitals and child life teams.</li>
+                        <li>We follow safety, infection control, and privacy policies.</li>
+                        <li>We collect written consent before recording/sharing.</li>
+                     </ul>
+                  </div>
+
+                  <div class="info">
+                     <h2>Official contact</h2>
+                     <p><strong>Email:</strong> thekeepsakeinitiative@gmail.com</p>
+                     <p><strong>Phone:</strong> Ruhani N - 734-492-2392 and Amogh V - 734-510-0948</p>
+
+                     <hr class="sep" />
+
+                     <h3>Contact form</h3>
+                     <form id="contact-form">
+                        <input type="hidden" name="form_type" value="General Contact" />
+
+                        <div class="row">
+                           <div>
+                              <label>Your name</label>
+                              <input name="name" required />
+                           </div>
+                           <div>
+                              <label>Your email</label>
+                              <input name="email" placeholder="you@email.com" required />
+                           </div>
+                        </div>
+
+                        <div>
+                           <label>Message</label>
+                           <textarea name="message" placeholder="Partnerships, chapters, keepsakes, sponsors, etc." required></textarea>
+                        </div>
+
+                        <button class="btn primary" type="submit">Send message</button>
+                        <div id="contact-result" class="small"></div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </section>
+      </main>
+
+      <footer class="footer">
+         <div class="container">© <span id="year"></span> The Keepsake Initiative</div>
+         <div class="container"><strong>Website Provided by Amogh Velivela</strong></div>
+      </footer>
+
+      <div class="toast" role="status" aria-live="polite"></div>
+
+      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+      <script>
+         (() => {
+           const CONFIG = {
+             STRIPE_DONATE_ONCE_URL: "",
+             EMAILJS_PUBLIC_KEY: "EVAYDFkS9G7fhKqb8",
+             EMAILJS_SERVICE_ID: "service_88j58pt",
+             EMAILJS_TEMPLATE_ID: "template_xbj102a",
+             SUPABASE_URL: "YOUR_SUPABASE_URL",
+             SUPABASE_ANON_KEY: "YOUR_SUPABASE_ANON_KEY"
+           };
+
+           const $ = (s, r=document) => r.querySelector(s);
+           const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+
+           const supabase = (window.supabase && CONFIG.SUPABASE_URL && CONFIG.SUPABASE_ANON_KEY && CONFIG.SUPABASE_URL !== "YOUR_SUPABASE_URL" && CONFIG.SUPABASE_ANON_KEY !== "YOUR_SUPABASE_ANON_KEY")
+             ? window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY)
+             : null;
+
+           const toast = $(".toast");
+           const showToast = (msg) => {
+             toast.textContent = msg;
+             toast.style.display = "block";
+             clearTimeout(showToast._t);
+             showToast._t = setTimeout(() => toast.style.display = "none", 2200);
+           };
+
+           const pages = ["home","keepsakes","testimonials","articles","resources","chapter","team","donate","about","reviews"];
+
+           function setActivePage(id, push=true){
+             pages.forEach(p => $("#page-"+p).classList.toggle("active", p===id));
+             $$("nav.links a[data-go]").forEach(a => a.classList.toggle("active", a.dataset.go===id));
+
+             if(push){
+               const url = new URL(location.href);
+               url.hash = "#"+id;
+               history.pushState({page:id}, "", url);
+             }
+             window.scrollTo({top:0, behavior:"smooth"});
+           }
+
+           $$("[data-go]").forEach(el => {
+             el.addEventListener("click", (e) => {
+               e.preventDefault();
+               const id = el.dataset.go;
+               if(pages.includes(id)) setActivePage(id, true);
+             });
+           });
+
+           window.addEventListener("popstate", (e) => {
+             const p = (e.state && e.state.page) || (location.hash || "#home").slice(1);
+             if(pages.includes(p)) setActivePage(p, false);
+           });
+
+           const initial = (location.hash || "#home").slice(1);
+           setActivePage(pages.includes(initial) ? initial : "home", false);
+
+           const donateOnce = $("#donate-once");
+           const donateStatus = $("#donate-status");
+
+           if(CONFIG.STRIPE_DONATE_ONCE_URL){
+             donateOnce.href = CONFIG.STRIPE_DONATE_ONCE_URL;
+             donateOnce.target = "_blank";
+             donateOnce.rel = "noopener";
+             donateStatus.textContent = "Stripe checkout is live.";
+           } else {
+             donateOnce.href = "#";
+             donateOnce.addEventListener("click", (e)=>{
+               e.preventDefault();
+               showToast("Paste STRIPE_DONATE_ONCE_URL in CONFIG to go live.");
+             });
+             donateStatus.textContent = "Donation link not live yet.";
+           }
+
+           const emailJsReady = () => CONFIG.EMAILJS_PUBLIC_KEY && CONFIG.EMAILJS_SERVICE_ID && CONFIG.EMAILJS_TEMPLATE_ID;
+
+           if(window.emailjs && emailJsReady()){
+             emailjs.init({ publicKey: CONFIG.EMAILJS_PUBLIC_KEY });
+           }
+
+           async function sendEmailFromForm(formEl){
+             return emailjs.sendForm(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, formEl);
+           }
+
+           function wireEmailForm(formId, resultId){
+             const form = $("#"+formId);
+             const result = $("#"+resultId);
+
+             form.addEventListener("submit", async (e) => {
+               e.preventDefault();
+
+               const emailField = form.querySelector('input[name="email"]');
+               const email = (emailField?.value || "").trim();
+
+               if(email && !/^\S+@\S+\.\S+$/.test(email)){
+                 result.textContent = "Please enter a valid email address.";
+                 showToast("Invalid email.");
+                 return;
+               }
+
+               if(!emailJsReady()){
+                 result.textContent = "Form is not live yet. Add EmailJS keys in CONFIG.";
+                 showToast("Add EmailJS keys in CONFIG.");
+                 return;
+               }
+
+               try{
+                 result.textContent = "Sending…";
+                 await sendEmailFromForm(form);
+                 result.textContent = "Sent.";
+                 showToast("Message sent.");
+                 form.reset();
+               }catch(err){
+                 result.textContent = "Could not send. Try again.";
+                 showToast("Send failed.");
+               }
+             });
+           }
+
+           wireEmailForm("contact-form", "contact-result");
+           wireEmailForm("parent-request-form", "parent-request-result");
+           wireEmailForm("hospital-form", "hospital-result");
+
+           $("#year").textContent = new Date().getFullYear();
+
+           const ARTICLE_POOL = [
+             {topic:"Hospital coping", title:"At the Hospital: Helping My Child Cope (PDF)", org:"NCTSN", kind:"Guide", url:"https://www.nctsn.org/sites/default/files/resources/at_the_hospital_helping_my_child_cope_parents.pdf", why:"Practical coping guidance for parents during pediatric hospitalization."},
+             {topic:"Siblings", title:"Support Siblings of a Hospitalized Child", org:"CHOP", kind:"Resource", url:"https://www.chop.edu/health-resources/support-siblings-hospitalized-child", why:"How siblings may react and how caregivers can support them."},
+             {topic:"Child life", title:"What is a Child Life Specialist?", org:"Cleveland Clinic", kind:"Explainer", url:"https://my.clevelandclinic.org/health/articles/22651-child-life-specialist", why:"Clear overview of child life services and benefits."},
+             {topic:"Child life", title:"Why Child Life", org:"Association of Child Life Professionals", kind:"Explainer", url:"https://www.childlife.org/practice/why-child-life", why:"What child life provides and why it matters."},
+             {topic:"Child life", title:"5 Ways Child Life Specialists Make an Impact", org:"Children’s Hospital Association", kind:"Article", url:"https://www.childrenshospitals.org/news/cha-blog/2025/03/5-ways-child-life-specialists-make-an-impact", why:"How child life supports coping, preparation, and stress reduction."},
+             {topic:"Parents coping (research)", title:"Parent Coping Support Interventions During Acute Pediatric Hospitalization", org:"PMC (Research)", kind:"Research", url:"https://pmc.ncbi.nlm.nih.gov/articles/PMC5574731/", why:"Research review on parent support interventions and stress reduction."},
+             {topic:"Siblings", title:"Supporting Siblings of a Hospitalized Child", org:"UCSF Benioff Children’s", kind:"Resource", url:"https://www.ucsfbenioffchildrens.org/education/supporting-siblings-of-a-hospitalized-child", why:"Communication and support tips for siblings."},
+             {topic:"Siblings", title:"Helping Children Cope When a Sibling is Hospitalized", org:"Dartmouth Health Children’s", kind:"Resource", url:"https://childrens.dartmouth-health.org/child-life/helping-children-cope-when-sibling-hospitalized", why:"Activities + approaches for sibling coping and connection."},
+             {topic:"Child life", title:"Child Life Services (SE Michigan)", org:"Corewell Health", kind:"Resource", url:"https://corewellhealth.org/care-and-specialties/childrens/southeast-michigan/about/child-life-services", why:"What child life provides; local Michigan relevance."},
+             {topic:"Hospital anxiety", title:"Hospitalized Children: Anxiety, Coping Strategies, and ...", org:"PMC (Research)", kind:"Research", url:"https://pmc.ncbi.nlm.nih.gov/articles/PMC6743064/", why:"Research discussion on anxiety and coping in hospitalized children."},
+             {topic:"Hospital anxiety (study)", title:"The role of hospital school education in reducing anxiety among hospitalized children", org:"Frontiers in Education", kind:"Research", url:"https://www.frontiersin.org/journals/education/articles/10.3389/feduc.2025.1601988/full", why:"Study on interventions associated with improved emotional outcomes."},
+             {topic:"Helping kids cope", title:"Helping Children Cope When a Parent is in the Hospital", org:"University of Michigan Health", kind:"Resource", url:"https://patiented.uofmhealth.org/Portal/Default/en-US/DownloadImageFile.ashx?objectId=6500&ownerId=8995&ownerType=0", why:"Practical coping suggestions and communication guidance."}
+           ];
+
+           const SET_SIZE = 6;
+
+           function isoWeekNumber(d){
+             const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+             const dayNum = date.getUTCDay() || 7;
+             date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+             const yearStart = new Date(Date.UTC(date.getUTCFullYear(),0,1));
+             return Math.ceil((((date - yearStart) / 86400000) + 1)/7);
+           }
+
+           const totalSets = Math.max(1, Math.ceil(ARTICLE_POOL.length / SET_SIZE));
+           let manualOffset = 0;
+
+           function currentSetIndex(){
+             const w = isoWeekNumber(new Date());
+             return ((w + manualOffset) % totalSets + totalSets) % totalSets;
+           }
+
+           function escapeHtml(str){
+             return String(str).replace(/[&<>"']/g, (m) => ({
+               "&":"&amp;",
+               "<":"&lt;",
+               ">":"&gt;",
+               '"':"&quot;",
+               "'":"&#39;"
+             }[m]));
+           }
+
+           function renderResourceArticles(){
+             const idx = currentSetIndex();
+             const start = idx * SET_SIZE;
+             const slice = ARTICLE_POOL.slice(start, start + SET_SIZE);
+
+             $("#resources-week-label").textContent = `Showing weekly set ${idx+1} of ${totalSets}`;
+
+             const list = $("#resources-articles-list");
+             list.innerHTML = "";
+
+             slice.forEach(a => {
+               const el = document.createElement("div");
+               el.className = "article-card";
+               el.innerHTML = `
+                 <div class="pill">${escapeHtml(a.topic)}</div>
+                 <h3 style="margin-top:10px;">${escapeHtml(a.title)}</h3>
+                 <div class="article-meta">${escapeHtml(a.org)} • ${escapeHtml(a.kind)}</div>
+                 <p class="small">${escapeHtml(a.why)}</p>
+                 <a class="btn primary" style="margin-top:10px;" href="${a.url}" target="_blank" rel="noopener">Open</a>
+               `;
+               list.appendChild(el);
+             });
+           }
+
+           $("#resources-prev-week").addEventListener("click", () => { manualOffset -= 1; renderResourceArticles(); });
+           $("#resources-next-week").addEventListener("click", () => { manualOffset += 1; renderResourceArticles(); });
+           $("#resources-this-week").addEventListener("click", () => { manualOffset = 0; renderResourceArticles(); });
+
+           renderResourceArticles();
+
+           const reviewForm = $("#review-form");
+           const reviewRating = $("#review-rating");
+           const ratingHelp = $("#rating-help");
+           const starBtns = $$("#page-reviews .star-btn");
+           const reviewsList = $("#reviews-list");
+           const reviewsEmpty = $("#reviews-empty");
+
+           function setStars(n){
+             starBtns.forEach(b => {
+               const v = Number(b.dataset.star);
+               const on = v <= n;
+               b.classList.toggle("on", on);
+               b.setAttribute("aria-pressed", on ? "true" : "false");
+             });
+             if(reviewRating) reviewRating.value = n ? String(n) : "";
+             if(ratingHelp) ratingHelp.textContent = n ? `Selected: ${n} star${n===1?"":"s"}.` : "Select 1–5 stars.";
+           }
+
+           async function loadReviews(){
+             if(!supabase) return [];
+             const { data, error } = await supabase
+               .from("reviews")
+               .select("*")
+               .order("created_at", { ascending: false });
+
+             if(error){
+               console.error(error);
+               return [];
+             }
+
+             return data || [];
+           }
+
+           async function renderReviews(){
+             const all = await loadReviews();
+             if(!reviewsList || !reviewsEmpty) return;
+
+             reviewsList.innerHTML = "";
+             reviewsEmpty.style.display = all.length ? "none" : "block";
+
+             all.forEach(r => {
+               const card = document.createElement("div");
+               card.className = "article-card";
+               const stars = "★".repeat(Number(r.rating || 0)) + "☆".repeat(5 - Number(r.rating || 0));
+               card.innerHTML = `
+                 <div class="pill">${escapeHtml(stars)}</div>
+                 <h3 style="margin-top:10px;">${escapeHtml(r.name || "")}</h3>
+                 <div class="article-meta">${escapeHtml(r.email || "")} • ${new Date(r.created_at).toLocaleString()}</div>
+                 <p class="small">${escapeHtml(r.comment || "")}</p>
+               `;
+               reviewsList.appendChild(card);
+             });
+           }
+
+           starBtns.forEach(btn => btn.addEventListener("click", () => setStars(Number(btn.dataset.star))));
+
+           if(reviewForm){
+             reviewForm.addEventListener("submit", async (e) => {
+               e.preventDefault();
+
+               const fd = new FormData(reviewForm);
+               const name = (fd.get("name") || "").toString().trim();
+               const email = (fd.get("email") || "").toString().trim();
+               const comment = (fd.get("comment") || "").toString().trim();
+               const rating = Number((fd.get("rating") || "").toString().trim());
+
+               const result = $("#review-result");
+
+               if(!name || !email || !comment){
+                 if(result) result.textContent = "Please fill in all fields.";
+                 showToast("Missing fields.");
+                 return;
+               }
+               if(!/^\S+@\S+\.\S+$/.test(email)){
+                 if(result) result.textContent = "Please enter a valid email address.";
+                 showToast("Invalid email.");
+                 return;
+               }
+               if(!rating || rating < 1 || rating > 5){
+                 if(result) result.textContent = "Please select a star rating.";
+                 showToast("Select a rating.");
+                 return;
+               }
+               if(!supabase){
+                 if(result) result.textContent = "Reviews are not live yet. Add SUPABASE_URL and SUPABASE_ANON_KEY in CONFIG, then create the reviews table in Supabase.";
+                 showToast("Add Supabase config.");
+                 return;
+               }
+
+               try{
+                 if(result) result.textContent = "Submitting…";
+
+                 const { error } = await supabase.from("reviews").insert([{
+                   name,
+                   email,
+                   comment,
+                   rating
+                 }]);
+
+                 if(error) throw error;
+
+                 if(result) result.textContent = "Review submitted.";
+                 showToast("Review submitted.");
+                 reviewForm.reset();
+                 setStars(0);
+                 await renderReviews();
+               }catch(err){
+                 console.error(err);
+                 if(result) result.textContent = "Could not submit review. Make sure the Supabase table exists and permissions are enabled.";
+                 showToast("Review failed.");
+               }
+             });
+           }
+
+           setStars(0);
+           renderReviews();
+         })();
+      </script>
+
+      <!--
+      SUPABASE SETUP (run once in Supabase SQL Editor)
+
+      create extension if not exists pgcrypto;
+
+      create table if not exists public.reviews (
+        id uuid primary key default gen_random_uuid(),
+        name text not null,
+        email text not null,
+        comment text not null,
+        rating integer not null check (rating >= 1 and rating <= 5),
+        created_at timestamptz not null default now()
+      );
+
+      alter table public.reviews enable row level security;
+
+      create policy "Allow public read reviews"
+      on public.reviews
+      for select
+      to anon
+      using (true);
+
+      create policy "Allow public insert reviews"
+      on public.reviews
+      for insert
+      to anon
+      with check (true);
+      -->
+   </body>
+</html>
