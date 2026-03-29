@@ -604,7 +604,7 @@
                            <button class="btn" type="button" data-go="chapter">Start a Chapter</button>
                            <button class="btn" type="button" data-go="about">Contact</button>
                         </div>
-                        <p class="small" style="margin-top:10px;">Donations are processed via Stripe (Visa supported).</p>
+                        <p class="small" style="margin-top:10px;">Donations are processed via gofundme.</p>
                      </div>
                   </aside>
                </div>
@@ -1446,7 +1446,7 @@ const supabase = (
            const donateStatus = $("#donate-status");
 
            if(CONFIG.STRIPE_DONATE_ONCE_URL){
-             donateOnce.href = CONFIG.STRIPE_DONATE_ONCE_URL;
+             donateOnce.href = CONFIG.https://gofund.me/69f325eca;
              donateOnce.target = "_blank";
              donateOnce.rel = "noopener";
              donateStatus.textContent = "Stripe checkout is live.";
@@ -1454,7 +1454,7 @@ const supabase = (
              donateOnce.href = "#";
              donateOnce.addEventListener("click", (e)=>{
                e.preventDefault();
-               showToast("Paste STRIPE_DONATE_ONCE_URL in CONFIG to go live.");
+               showToast("https://gofund.me/69f325eca");
              });
              donateStatus.textContent = "Donation link not live yet.";
            }
