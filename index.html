@@ -249,7 +249,6 @@
          font-size: 12.5px;
          color: rgba(241,245,249,0.92);
          }
-         /* ====== TEAM (FIXED): BIG PHOTO ABOVE TEXT ====== */
          .team-grid{
          display:grid;
          grid-template-columns: repeat(3, 1fr);
@@ -494,7 +493,7 @@
             </nav>
 
             <div class="nav-actions">
-               <button class="btn primary" type="button" data-go="donate">One Time Only Payment</button>
+               <a class="btn primary" href="https://gofund.me/16183452f" target="_blank" rel="noopener">One Time Only Payment</a>
             </div>
          </div>
       </header>
@@ -600,11 +599,11 @@
                      <div class="info" style="margin-top:14px;">
                         <h2>Quick actions</h2>
                         <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                           <button class="btn primary" type="button" data-go="donate">One Time Only Payment</button>
+                           <a class="btn primary" href="https://gofund.me/16183452f" target="_blank" rel="noopener">One Time Only Payment</a>
                            <button class="btn" type="button" data-go="chapter">Start a Chapter</button>
                            <button class="btn" type="button" data-go="about">Contact</button>
                         </div>
-                        <p class="small" style="margin-top:10px;">Donations are processed via gofundme.</p>
+                        <p class="small" style="margin-top:10px;">Donations are processed via GoFundMe.</p>
                      </div>
                   </aside>
                </div>
@@ -710,7 +709,7 @@ And sometimes it looks out the window and says,
             </div>
          </section>
 
-         <!-- REVIEWS (ADDED) -->
+         <!-- REVIEWS -->
          <section class="page" id="page-reviews" aria-labelledby="reviews-title">
            <div class="card pad">
              <h1 id="reviews-title">Reviews</h1>
@@ -1187,9 +1186,9 @@ And sometimes it looks out the window and says,
                <div class="two">
                   <div class="info">
                      <h2>One Time Only Payment</h2>
-                     <p class="small">This button opens Stripe checkout. People can donate more than once if they want.</p>
+                     <p class="small">This button opens our GoFundMe donation page. People can donate more than once if they want.</p>
                      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-                        <a id="donate-once" class="btn primary" href="#" role="button">One Time Only Payment</a>
+                        <a id="donate-once" class="btn primary" href="https://gofund.me/16183452f" target="_blank" rel="noopener" role="button">One Time Only Payment</a>
                      </div>
                      <p class="small" id="donate-status" style="margin-top:10px;"></p>
                   </div>
@@ -1273,7 +1272,7 @@ And sometimes it looks out the window and says,
       <footer class="footer">
          <div class="container"><strong>Website Provided by Amogh Velivela</strong></div>
          <div class="container">We are a 501(c)(3) Non-Profit Organization</div>
-          <div class="container">© <span id="year"></span> The Keepsake Initiative</div>
+         <div class="container">© <span id="year"></span> The Keepsake Initiative</div>
       </footer>
 
       <div class="toast" role="status" aria-live="polite"></div>
@@ -1282,30 +1281,30 @@ And sometimes it looks out the window and says,
       <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
       <script>
          (() => {
-          const CONFIG = {
-  STRIPE_DONATE_ONCE_URL: "",
-  EMAILJS_PUBLIC_KEY: "EVAYDFkS9G7fhKqb8",
-  EMAILJS_SERVICE_ID: "service_88j58pt",
-  EMAILJS_TEMPLATE_ID: "template_xbj102a",
-  SUPABASE_URL: "https://zgulfsoluprkvtcbvcmo.supabase.co",
-  SUPABASE_ANON_KEY: "sb_publishable_AjsqcGICL4cbnrAxY-iDrg_1RAHaqCA"
-};
+           const CONFIG = {
+             STRIPE_DONATE_ONCE_URL: "https://gofund.me/16183452f",
+             EMAILJS_PUBLIC_KEY: "EVAYDFkS9G7fhKqb8",
+             EMAILJS_SERVICE_ID: "service_88j58pt",
+             EMAILJS_TEMPLATE_ID: "template_xbj102a",
+             SUPABASE_URL: "https://zgulfsoluprkvtcbvcmo.supabase.co",
+             SUPABASE_ANON_KEY: "sb_publishable_AjsqcGICL4cbnrAxY-iDrg_1RAHaqCA"
+           };
 
-const $ = (s, r = document) => r.querySelector(s);
-const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+           const $ = (s, r = document) => r.querySelector(s);
+           const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
-const supabase = (
-  window.supabase &&
-  CONFIG.SUPABASE_URL &&
-  CONFIG.SUPABASE_ANON_KEY &&
-  CONFIG.SUPABASE_URL !== "YOUR_SUPABASE_URL" &&
-  CONFIG.SUPABASE_ANON_KEY !== "YOUR_SUPABASE_ANON_KEY"
-)
-  ? window.supabase.createClient(
-      CONFIG.SUPABASE_URL,
-      CONFIG.SUPABASE_ANON_KEY
-    )
-  : null;
+           const supabase = (
+             window.supabase &&
+             CONFIG.SUPABASE_URL &&
+             CONFIG.SUPABASE_ANON_KEY &&
+             CONFIG.SUPABASE_URL !== "YOUR_SUPABASE_URL" &&
+             CONFIG.SUPABASE_ANON_KEY !== "YOUR_SUPABASE_ANON_KEY"
+           )
+             ? window.supabase.createClient(
+                 CONFIG.SUPABASE_URL,
+                 CONFIG.SUPABASE_ANON_KEY
+               )
+             : null;
 
            const toast = $(".toast");
            const showToast = (msg) => {
@@ -1390,7 +1389,6 @@ const supabase = (
              bar.style.transform = `scaleX(${progress})`;
            }
 
-
            function setActivePage(id, push=true){
              pages.forEach(p => $("#page-"+p).classList.toggle("active", p===id));
              $$("nav.links a[data-go]").forEach(a => a.classList.toggle("active", a.dataset.go===id));
@@ -1445,17 +1443,22 @@ const supabase = (
            const donateOnce = $("#donate-once");
            const donateStatus = $("#donate-status");
 
-           if(CONFIG.STRIPE_DONATE_ONCE_URL){
+           if (donateOnce) {
              donateOnce.href = CONFIG.STRIPE_DONATE_ONCE_URL;
              donateOnce.target = "_blank";
              donateOnce.rel = "noopener";
-             donateStatus.textContent = "Stripe checkout is live.";
+           }
+
+           if (CONFIG.STRIPE_DONATE_ONCE_URL) {
+             donateStatus.textContent = "GoFundMe donation link is live.";
            } else {
-             donateOnce.href = "#";
-             donateOnce.addEventListener("click", (e)=>{
-               e.preventDefault();
-               showToast("https://gofund.me/69f325eca");
-             });
+             if (donateOnce) {
+               donateOnce.href = "#";
+               donateOnce.addEventListener("click", (e) => {
+                 e.preventDefault();
+                 showToast("Donation link not available.");
+               });
+             }
              donateStatus.textContent = "Donation link not live yet.";
            }
 
