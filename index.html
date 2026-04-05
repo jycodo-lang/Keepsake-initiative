@@ -258,9 +258,26 @@
          @media (max-width: 960px){
          .team-grid{ grid-template-columns:1fr; }
          }
+          .team-grid-head{
+         display:grid;
+         grid-template-columns: repeat(2, 1fr);
+         gap: 14px;
+         margin-top: 12px;
+         }
+         @media (max-width: 960px){
+         .team-grid-head{ grid-template-columns:1fr; }
+         }
          .team-card{
          padding: 14px;
          border-radius: 16px;
+         border: 1px solid var(--stroke);
+         background: rgba(15,23,42,0.74);
+         box-shadow: var(--shadow2);
+         text-align:center;
+         }
+          .team-card-head{
+         padding: 21px;
+         border-radius: 20px;
          border: 1px solid var(--stroke);
          background: rgba(15,23,42,0.74);
          box-shadow: var(--shadow2);
@@ -1073,8 +1090,8 @@ And sometimes it looks out the window and says,
             <div class="card pad">
                <h1 id="team-title">Meet Our Team</h1>
                <p class="lead">Board of Directors</p>
-<div class="team-grid">
- <div class="team-card">
+<div class="team-grid-head">
+ <div class="team-card-head">
                      <img class="team-photo" src="ruhani.png" alt="Ruhani Nagrath">
                      <div class="team-name">Ruhani Nagrath</div>
                      <div class="team-roleline">President and Co-Founder</div>
@@ -1084,7 +1101,7 @@ And sometimes it looks out the window and says,
                   </div>
                
                
-                  <div class="team-card">
+                  <div class="team-card-head">
                      <img class="team-photo" src="Amogh.png" alt="Amogh Velivela">
                      <div class="team-name">Amogh Velivela</div>
                      <div class="team-roleline">Vice President and Co-Founder</div>
