@@ -1221,13 +1221,13 @@ And sometimes it looks out the window and says,
                   </div>
 </div>
 </section>
-<!-- Video Popup Modal -->
+
 <div id="videoModal" class="video-modal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.9); justify-content:center; align-items:center;">
     <div style="position:relative; width:90%; max-width:800px;">
-        <!-- Close Button (Cross) -->
+     
         <span onclick="closeVideo()" style="position:absolute; top:-45px; right:0; color:#fff; font-size:40px; cursor:pointer;">&times;</span>
         
-        <!-- Video Container (16:9 Aspect Ratio) -->
+      
         <div style="padding-top:56.25%; position:relative; background:#000;">
             <iframe id="videoFrame" style="position:absolute; top:0; left:0; width:100%; height:100%;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
@@ -1236,18 +1236,18 @@ And sometimes it looks out the window and says,
 
 <script>
 function openVideo(videoUrl) {
-    // Set the iframe source to the video URL and show the modal
+
     document.getElementById('videoFrame').src = videoUrl;
     document.getElementById('videoModal').style.display = 'flex';
 }
 
 function closeVideo() {
-    // Hide the modal and clear the source to stop the video from playing in the background
+  
     document.getElementById('videoModal').style.display = 'none';
     document.getElementById('videoFrame').src = '';
 }
 
-// Optional: Close modal if clicking outside the video box
+
 window.onclick = function(event) {
     var modal = document.getElementById('videoModal');
     if (event.target == modal) {
@@ -1257,7 +1257,7 @@ window.onclick = function(event) {
 </script>
 
 <style>
-/* Make cards look clickable */
+
 .team-card-head, .team-card { cursor: pointer; transition: 0.3s; }
 .team-card-head:hover, .team-card:hover { opacity: 0.8; transform: translateY(-5px); }
 </style>
@@ -1798,34 +1798,5 @@ window.onclick = function(event) {
            renderReviews();
          })();
       </script>
-
-      <!--
-      SUPABASE SETUP (run once in Supabase SQL Editor)
-
-      create extension if not exists pgcrypto;
-
-      create table if not exists public.reviews (
-        id uuid primary key default gen_random_uuid(),
-        name text not null,
-        email text not null,
-        comment text not null,
-        rating integer not null check (rating >= 1 and rating <= 5),
-        created_at timestamptz not null default now()
-      );
-
-      alter table public.reviews enable row level security;
-
-      create policy "Allow public read reviews"
-      on public.reviews
-      for select
-      to anon
-      using (true);
-
-      create policy "Allow public insert reviews"
-      on public.reviews
-      for insert
-      to anon
-      with check (true);
-      -->
    </body>
 </html>
